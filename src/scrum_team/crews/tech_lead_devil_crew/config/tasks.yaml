@@ -1,17 +1,178 @@
-research_task:
+technical_design_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
-  expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    INPUT SOURCES:
+    - User Stories: from Product Manager - includes UI/UX requirements and user-facing messages: ```{user_stories}```
+    - Business Requirements: raw client requirements for the software feature: ```{requirements}``
 
-reporting_task:
-  description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    ## Your Task
+
+    Transform user stories and business requirements into production-ready technical designs by:
+
+    1. **Analyzing Input**:
+      - Review user stories from Product Manager for UI/UX requirements and user-facing messages
+      - Extract technical requirements from business requirements
+      - Identify data models, workflows, and integration points
+      - Clarify ambiguities and technical constraints
+
+    2. **Designing Backend (Python)**:
+      - Define module structure with clear responsibility boundaries
+      - Specify all classes, methods, and functions with complete signatures
+      - Create data models using Pydantic or dataclasses
+      - Design error handling with specific exception types
+      - Document backend response formats for UI consumption
+
+    3. **Designing Frontend (Gradio)**:
+      - Map backend functionality to Gradio components
+      - Design UI layout and user workflows
+      - Specify all user-facing messages and feedback mechanisms
+      - Define input validation and error display strategies
+      - Ensure accessibility and usability requirements
+
+    4. **Defining Integration**:
+      - Document how Gradio calls Python backend methods
+      - Create data flow diagrams showing end-to-end workflows
+      - Map user story messages to specific UI elements
+      - Define testing strategies for backend, frontend, and integration
+
+    5. **Ensuring Implementation Readiness**:
+      - Provide code examples and templates
+      - Include docstring templates following Google or NumPy style
+      - Specify dependencies and setup requirements
+      - Define Definition of Done criteria
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A comprehensive technical design document in markdown format containing:
+
+    ### Document Structure:
+
+    #### 1. Overview & Architecture
+    - High-level system architecture diagram
+    - Technology stack (Python version, Gradio version, key dependencies)
+    - Module organization and file structure
+    - Design principles and patterns used
+    - Integration architecture (backend ↔ frontend)
+
+    #### 2. Python Backend Design
+    - **Module Structure**:
+      - File organization and naming conventions
+      - Package structure and imports
+      - Dependency management (requirements.txt or pyproject.toml)
+      
+    - **Class Definitions**:
+      - Primary class with complete method signatures
+      - Type hints for all parameters and return values
+      - Comprehensive docstrings (Google or NumPy style)
+      - Properties, class methods, static methods
+      
+    - **Data Models/Schemas**:
+      - Pydantic models or dataclasses for all domain objects
+      - Validation rules and constraints
+      - Serialization/deserialization strategies
+      
+    - **Error Handling Strategy**:
+      - Custom exception hierarchy
+      - Error messages and error codes
+      - Exception handling patterns
+      
+    - **Backend Response Format**:
+      - Standard success response structure
+      - Standard error response structure
+      - Data formatting for UI consumption
+
+    #### 3. Gradio Frontend Design
+    - **UI Component Mapping**:
+      - Table mapping backend methods → Gradio components
+      - Component configurations and properties
+      - Event handlers and callbacks
+      
+    - **User-Facing Messages**:
+      - Success messages (gr.Info)
+      - Error messages (gr.Error)
+      - Warning messages (gr.Warning)
+      - Informational messages
+      - Loading states and progress indicators
+      
+    - **UI Layout & Workflow**:
+      - Gradio Blocks layout specification
+      - Tab organization (if applicable)
+      - Row/Column arrangements
+      - User interaction flows
+      - State management
+      
+    - **Input Validation & Error Display**:
+      - Client-side validation rules
+      - Error message display strategies
+      - Field-level vs form-level validation
+      - Accessibility considerations
+
+    #### 4. Integration Points
+    - **Backend-Frontend Communication**:
+      - Function call patterns (sync vs async)
+      - Data passing conventions
+      - Error propagation strategies
+      
+    - **Data Flow Diagrams**:
+      - User input → Backend processing → UI display
+      - Error handling flows
+      - State update flows
+      
+    - **Message Mapping**:
+      - User story requirements → UI elements
+      - Backend error codes → User-facing messages
+      - Success scenarios → Confirmation messages
+
+    #### 5. Implementation Examples
+    - **Backend Usage Examples**:
+      - Class instantiation
+      - Method invocation patterns
+      - Error handling examples
+      - Unit test examples
+      
+    - **Frontend Integration Examples**:
+      - Complete Gradio app skeleton
+      - Event handler implementations
+      - State management examples
+      - Error display examples
+
+    #### 6. Testing & QA Guidelines
+    - **Backend Testing**:
+      - Unit test requirements
+      - Test data and fixtures
+      - Coverage expectations
+      
+    - **Frontend Testing**:
+      - UI component testing
+      - User workflow testing
+      - Accessibility testing
+      
+    - **Integration Testing**:
+      - End-to-end test scenarios
+      - QA validation points from user stories
+      - Performance testing requirements
+
+    #### 7. Dependencies & Setup
+    - Required Python packages with versions
+    - Gradio version and configuration
+    - Development environment setup
+    - Deployment considerations
+
+    #### 8. Definition of Done
+    - Code completion checklist
+    - Testing requirements
+    - Documentation requirements
+    - Performance criteria
+    - Accessibility compliance
+    
+    ### Quality Standards
+
+    Your technical design must:
+    - ✅ Be immediately implementable by developers without additional clarification
+    - ✅ Include complete type hints for all Python code examples
+    - ✅ Specify exact Gradio component types and configurations
+    - ✅ Map all user-facing messages from user stories to UI elements
+    - ✅ Provide clear separation between backend logic and UI concerns
+    - ✅ Enable independent development of backend and frontend
+    - ✅ Include sufficient examples to eliminate ambiguity
+    - ✅ Address all acceptance criteria from user stories
+    - ✅ Define clear testing strategies for QA validation
+    - ✅ Be version-controlled and maintainable as requirements evolve    
+  agent: engineering_lead

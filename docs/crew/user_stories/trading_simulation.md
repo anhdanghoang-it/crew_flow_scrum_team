@@ -132,7 +132,8 @@ graph TD
       "cash_balance": 100000.00,
       "holdings": { "AAPL": 100, "TSLA": 50 },
       "transactions": [ ... ], // See US-002
-      "total_deposits": 100000.00
+      "total_deposits": 100000.00,
+      "total_withdrawals": 0.00
     }
     ```
 -   A `gr.State` variable `account_initialized` (boolean) will control the visibility of the UI groups and the enabled state of the other tabs.

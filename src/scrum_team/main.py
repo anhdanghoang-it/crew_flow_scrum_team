@@ -6,14 +6,19 @@ from pydantic import BaseModel
 from crewai.flow import Flow, listen, start
 
 from scrum_team.crews.pm_demon_king_crew.pm_demon_king_crew import PmDemonKingCrew
+from scrum_team.crews.tech_lead_devil_crew.tech_lead_devil_crew import TechLeadDevilCrew
 
 
 class ScrumState(BaseModel):
     requirements: str = ""
     user_stories_created: str = ""
+    technical_design_created: str = ""
 
 pm_icon = "👹👹👹👹👹👹👹👹"
-pm_agent_name = f"Demon King PM {randint(1000, 9999)}"
+pm_agent_name = f"Demon King PM"
+
+tl_icon = "😈😈😈😈😈😈😈😈"
+tl_agent_name = f"Tech Lead Devil"
 
 class ScrumFlow(Flow[ScrumState]):
     @start()
@@ -35,9 +40,30 @@ class ScrumFlow(Flow[ScrumState]):
     @listen(generate_user_stories)
     def save_user_stories(self):
         print(f"{pm_icon} {pm_agent_name} Saving user stories to file")
-        with open("docs/crew/user_stories/trading_simulation.md", "w") as f:
+        with open("docs/crew/trading_simulation.md", "w") as f:
             f.write(self.state.user_stories_created)
 
+
+    @listen(save_user_stories)
+    def create_technical_design(self):
+        print(f"{tl_icon} {tl_agent_name} Creating technical design{tl_icon}")
+        result = (
+            TechLeadDevilCrew()
+            .crew()
+            .kickoff(inputs={
+                "user_stories": self.state.user_stories_created,
+                "requirements": self.state.requirements,
+                })
+        )
+
+        print(f"{tl_icon} {tl_agent_name} Technical design created{tl_icon}", result.raw)
+        self.state.technical_design_created = result.raw
+
+    @listen(create_technical_design)
+    def save_technical_design(self):
+        print(f"{tl_icon} {tl_agent_name} Saving technical design to file")
+        with open("docs/crew/technical_design.md", "w") as f:
+            f.write(self.state.technical_design_created)
 
 def kickoff():
     scrum_flow = ScrumFlow()
