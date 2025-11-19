@@ -63,10 +63,12 @@ A comprehensive user stories document containing:
   - Expected system behaviors
   
 - **UI/UX Specifications**:
-  - Component requirements and layouts
-  - User feedback messages (success, error, warning, info)
+  - Wireframes/mockups showing the Gradio interface layout
+  - Gradio component requirements (gr.Textbox, gr.Button, gr.DataFrame, etc.)
+  - Component layouts and arrangements using Gradio Blocks/Rows/Columns
+  - User feedback messages (success, error, warning, info) via gr.Info, gr.Warning, gr.Error
   - Accessibility requirements (ARIA labels, keyboard navigation, screen reader support)
-  - Responsive design considerations
+  - Responsive design considerations within Gradio framework constraints
   
 - **Technical Notes**:
   - API endpoints or data requirements (if applicable)
@@ -84,17 +86,17 @@ A comprehensive user stories document containing:
 
 #### Naming Convention
 
-`[feature_name]_UserStories.md`
+`[feature_name]_user_stories.md`
 
 Use lowercase with underscores, be descriptive and specific.
 
 **Examples:**
 
-- `account_management_UserStories.md`
-- `trading_simulation_UserStories.md`
-- `payment_processing_UserStories.md`
-- `user_authentication_UserStories.md`
+- `account_management_user_stories.md`
+- `trading_simulation_user_stories.md`
+- `payment_processing_user_stories.md`
+- `user_authentication_user_stories.md`
 
 #### Location
 
-All user story documents must be saved in: '/docs/user_stories/'
+All user story documents must be saved in: `/docs/copilot/user_stories/`

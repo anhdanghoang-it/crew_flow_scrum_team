@@ -15,37 +15,35 @@ class ScrumState(BaseModel):
 
 class ScrumFlow(Flow[ScrumState]):
     @start()
-    def pm_generate_userstories(self, crewai_trigger_payload: dict = None):
-        print("PM generate user stories")
-        
-
-    @listen(generate_sentence_count)
-    def generate_poem(self):
-        print("Generating poem")
+    def generate_user_stories(self, crewai_trigger_payload: dict = None):
+        print("Generating user stories")
+        with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
+            requirements = f.read()
+        self.state.requirements = requirements
         result = (
-            PoemCrew()
+            EngineeringTeam()
             .crew()
-            .kickoff(inputs={"sentence_count": self.state.sentence_count})
+            .kickoff(inputs={"requirements": self.state.requirements})
         )
 
-        print("Poem generated", result.raw)
-        self.state.poem = result.raw
+        print("User stories generated", result.raw)
+        self.state.user_stories_created = result.raw
 
-    @listen(generate_poem)
-    def save_poem(self):
-        print("Saving poem")
-        with open("poem.txt", "w") as f:
-            f.write(self.state.poem)
+    @listen(generate_user_stories)
+    def save_user_stories(self):
+        print("Saving user stories to file")
+        with open("docs/crew/user_stories/trading_simulation.md", "w") as f:
+            f.write(self.state.user_stories_created)
 
 
 def kickoff():
-    poem_flow = PoemFlow()
-    poem_flow.kickoff()
+    scrum_flow = ScrumFlow()
+    scrum_flow.kickoff()
 
 
 def plot():
-    poem_flow = PoemFlow()
-    poem_flow.plot()
+    scrum_flow = ScrumFlow()
+    scrum_flow.plot()
 
 
 def run_with_trigger():
@@ -66,7 +64,7 @@ def run_with_trigger():
 
     # Create flow and kickoff with trigger payload
     # The @start() methods will automatically receive crewai_trigger_payload parameter
-    poem_flow = PoemFlow()
+    poem_flow = ScrumFlow()
 
     try:
         result = poem_flow.kickoff({"crewai_trigger_payload": trigger_payload})

@@ -1,15 +1,51 @@
 create_userstories_task:
   description: >
-    Transform raw client requirements into complete, implementable user stories. 
-    The requirements are: {requirements}
-    Analyze the requirement, write clear user story format (As/Want/So that), 
-    define testable acceptance criteria covering happy paths and edge cases, 
-    specify UI/UX needs, 
-    and ensure the story meets Definition of Ready so developers can estimate and implement without ambiguity.
+    You are provided with raw client requirements for a software feature. The requirements are:
+    ```{requirements}```
+    Transform raw client requirements into complete, production-ready user stories by:
+
+    1. **Analyzing Requirements**: Extract core business value, identify user personas, and clarify ambiguous points
+    2. **Writing User Stories**: Craft clear story statements in "As a [role], I want [capability], so that [benefit]" format
+    3. **Defining Acceptance Criteria**: Document testable Given-When-Then scenarios covering:
+      - Happy path flows
+      - Edge cases and boundary conditions
+      - Error handling and validation
+      - User feedback and messaging
+    4. **Specifying UI/UX Requirements**: Detail interface components, interactions, layouts, and accessibility needs
+    5. **Ensuring Story Readiness**: Verify each story meets Definition of Ready criteria for immediate development estimation and implementation
   expected_output: >
-    Complete user stories document containing:
-      Story Header: ID, title, user story statement (As/Want/So that), business value, priority
-      Acceptance Criteria: Given-When-Then scenarios
-      UI/UX Specs: Wireframes/mockups, design components, accessibility checklist (if applicable)
+    A comprehensive user stories document containing:
+
+    ### Story Structure:
+    - **Story Header**: 
+      - Unique Story ID (e.g., US-001)
+      - Descriptive title
+      - User story statement (As/Want/So that format)
+      - Business value and priority (High/Medium/Low)
+      - Story points estimation guidance
+      
+    - **Acceptance Criteria**: 
+      - Given-When-Then scenarios for all flows
+      - Validation rules and constraints
+      - Expected system behaviors
+      
+    - **UI/UX Specifications**:
+      - Wireframes/mockups showing the Gradio interface layout
+      - Gradio component requirements (gr.Textbox, gr.Button, gr.DataFrame, etc.)
+      - Component layouts and arrangements using Gradio Blocks/Rows/Columns
+      - User feedback messages (success, error, warning, info) via gr.Info, gr.Warning, gr.Error
+      - Accessibility requirements (ARIA labels, keyboard navigation, screen reader support)
+      - Responsive design considerations within Gradio framework constraints
+      
+    - **Technical Notes**:
+      - API endpoints or data requirements (if applicable)
+      - Dependencies on other stories
+      - Performance expectations
+      
+    - **Definition of Done**:
+      - Completion checklist
+      - Testing requirements
+
+    - **Out of Scope**: 
+      - Explicitly listed exclusions to prevent scope creep
   agent: product_manager
-  output_file: 'output/user_stories.md'
