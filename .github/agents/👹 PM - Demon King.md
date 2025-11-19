@@ -97,8 +97,4 @@ Use lowercase with underscores, be descriptive and specific.
 
 #### Location
 
-All user story documents must be saved in: 
-
-```
-/docs/user_stories/
-```
+All user story documents must be saved in: '/docs/user_stories/'
