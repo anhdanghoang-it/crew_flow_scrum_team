@@ -5,34 +5,36 @@ from pydantic import BaseModel
 
 from crewai.flow import Flow, listen, start
 
-from scrum_team.crews.poem_crew.poem_crew import PoemCrew
-from scrum_team.crews.engineering_team.engineering_team import EngineeringTeam
+from scrum_team.crews.pm_demon_king_crew.pm_demon_king_crew import PmDemonKingCrew
 
 
 class ScrumState(BaseModel):
     requirements: str = ""
     user_stories_created: str = ""
 
+pm_icon = "👹👹👹👹👹👹👹👹"
+pm_agent_name = f"Demon King PM {randint(1000, 9999)}"
+
 class ScrumFlow(Flow[ScrumState]):
     @start()
     def generate_user_stories(self, crewai_trigger_payload: dict = None):
-        pm_icon = "👹👹👹👹👹👹👹👹"
-        print(f"{pm_icon}Generating user stories{pm_icon}")
+
+        print(f"{pm_icon} {pm_agent_name} Generating user stories{pm_icon}")
         with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
             requirements = f.read()
         self.state.requirements = requirements
         result = (
-            EngineeringTeam()
+            PmDemonKingCrew()
             .crew()
             .kickoff(inputs={"requirements": self.state.requirements})
         )
 
-        print(f"{pm_icon}User stories generated{pm_icon}", result.raw)
+        print(f"{pm_icon} {pm_agent_name} User stories generated{pm_icon}", result.raw)
         self.state.user_stories_created = result.raw
 
     @listen(generate_user_stories)
     def save_user_stories(self):
-        print("Saving user stories to file")
+        print(f"{pm_icon} {pm_agent_name} Saving user stories to file")
         with open("docs/crew/user_stories/trading_simulation.md", "w") as f:
             f.write(self.state.user_stories_created)
 

@@ -7,8 +7,8 @@ from typing import List
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
 @CrewBase
-class EngineeringTeam():
-    """EngineeringTeam crew"""
+class PmDemonKingCrew():
+    """PmDemonKingCrew crew"""
 
     agents: List[BaseAgent]
     tasks: List[Task]
@@ -28,13 +28,15 @@ class EngineeringTeam():
 
     @crew
     def crew(self) -> Crew:
-        """Creates the EngineeringTeam crew"""
+        """Creates the PmDemonKingCrew crew"""
+        # To learn how to add knowledge sources to your crew, check out the documentation:
+        # https://docs.crewai.com/concepts/knowledge#what-is-knowledge
 
         return Crew(
             agents=self.agents, # Automatically created by the @agent decorator
             tasks=self.tasks, # Automatically created by the @task decorator
             process=Process.sequential,
+            memory=True,
             verbose=True,
-            memory=True
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )
