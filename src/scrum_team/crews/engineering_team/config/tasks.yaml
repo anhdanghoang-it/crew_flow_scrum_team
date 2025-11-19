@@ -1,17 +1,15 @@
-research_task:
+create_userstories_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Transform raw client requirements into complete, implementable user stories. 
+    The requirements are: {requirements}
+    Analyze the requirement, write clear user story format (As/Want/So that), 
+    define testable acceptance criteria covering happy paths and edge cases, 
+    specify UI/UX needs, 
+    and ensure the story meets Definition of Ready so developers can estimate and implement without ambiguity.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
-
-reporting_task:
-  description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
-  expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    Complete user stories document containing:
+      Story Header: ID, title, user story statement (As/Want/So that), business value, priority
+      Acceptance Criteria: Given-When-Then scenarios
+      UI/UX Specs: Wireframes/mockups, design components, accessibility checklist (if applicable)
+  agent: product_manager
+  output_file: 'output/user_stories.md'

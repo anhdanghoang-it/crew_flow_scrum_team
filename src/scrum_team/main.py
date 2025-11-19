@@ -6,26 +6,18 @@ from pydantic import BaseModel
 from crewai.flow import Flow, listen, start
 
 from scrum_team.crews.poem_crew.poem_crew import PoemCrew
+from scrum_team.crews.engineering_team.engineering_team import EngineeringTeam
 
 
-class PoemState(BaseModel):
-    sentence_count: int = 1
-    poem: str = ""
+class ScrumState(BaseModel):
+    requirements: str = ""
+    user_stories_created: str = ""
 
-
-class PoemFlow(Flow[PoemState]):
-
+class ScrumFlow(Flow[ScrumState]):
     @start()
-    def generate_sentence_count(self, crewai_trigger_payload: dict = None):
-        print("Generating sentence count")
-
-        # Use trigger payload if available
-        if crewai_trigger_payload:
-            # Example: use trigger data to influence sentence count
-            self.state.sentence_count = crewai_trigger_payload.get('sentence_count', randint(1, 5))
-            print(f"Using trigger payload: {crewai_trigger_payload}")
-        else:
-            self.state.sentence_count = randint(1, 5)
+    def pm_generate_userstories(self, crewai_trigger_payload: dict = None):
+        print("PM generate user stories")
+        
 
     @listen(generate_sentence_count)
     def generate_poem(self):
