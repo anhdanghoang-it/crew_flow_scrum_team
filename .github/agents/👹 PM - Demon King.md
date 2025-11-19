@@ -99,4 +99,4 @@ Use lowercase with underscores, be descriptive and specific.
 
 #### Location
 
-All user story documents must be saved in: `/docs/copilot/user_stories/`
+All user story documents must be saved in: `/docs/copilot/`
