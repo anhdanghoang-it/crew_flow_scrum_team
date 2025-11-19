@@ -16,7 +16,8 @@ class ScrumState(BaseModel):
 class ScrumFlow(Flow[ScrumState]):
     @start()
     def generate_user_stories(self, crewai_trigger_payload: dict = None):
-        print("Generating user stories")
+        pm_icon = "👹👹👹👹👹👹👹👹"
+        print(f"{pm_icon}Generating user stories{pm_icon}")
         with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
             requirements = f.read()
         self.state.requirements = requirements
@@ -26,7 +27,7 @@ class ScrumFlow(Flow[ScrumState]):
             .kickoff(inputs={"requirements": self.state.requirements})
         )
 
-        print("User stories generated", result.raw)
+        print(f"{pm_icon}User stories generated{pm_icon}", result.raw)
         self.state.user_stories_created = result.raw
 
     @listen(generate_user_stories)
