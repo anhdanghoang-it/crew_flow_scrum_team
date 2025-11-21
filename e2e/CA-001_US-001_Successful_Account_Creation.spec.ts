@@ -15,7 +15,10 @@ test.describe('US-001 Create Trading Account', () => {
     await page.getByRole('textbox', { name: 'Username' }).fill(username);
     await page.getByRole('textbox', { name: 'Display name' }).fill(`Trader ${Date.now()}`);
     await page.getByRole('button', { name: 'Create Account' }).click();
-    await expect(page.getByText('Account created successfully.')).toBeVisible();
+    // Multiple instances of the success text (inline paragraph + toast). Use the singular alert region.
+    await expect(
+      page.getByRole('alert').filter({ hasText: 'Account created successfully.' })
+    ).toBeVisible();
     // Final Outcome: Account object created with expected initial state (validated by success message presence)
   });
 });
