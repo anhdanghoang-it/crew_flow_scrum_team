@@ -48,4 +48,23 @@ create_userstories_task:
 
     - **Out of Scope**: 
       - Explicitly listed exclusions to prevent scope creep
+    ### File Naming and Location
+
+    #### Naming Convention
+
+    `[feature_name]_user_stories.md`
+
+    Use lowercase with underscores, be descriptive and specific.
+
+    **Examples:**
+
+    - `account_management_user_stories.md`
+    - `trading_simulation_user_stories.md`
+    - `payment_processing_user_stories.md`
+    - `user_authentication_user_stories.md`
+
+    #### Location
+
+    All user story documents must be saved in: `/docs/crew/`      
   agent: product_manager
+  output_file: /docs/crew/trading_simulation_user_stories.md

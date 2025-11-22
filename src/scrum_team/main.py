@@ -14,16 +14,15 @@ class ScrumState(BaseModel):
     user_stories_created: str = ""
     technical_design_created: str = ""
 
-pm_icon = "👹👹👹👹👹👹👹👹"
-pm_agent_name = f"Demon King PM"
 
-tl_icon = "😈😈😈😈😈😈😈😈"
-tl_agent_name = f"Tech Lead Devil"
+
+
 
 class ScrumFlow(Flow[ScrumState]):
     @start()
     def generate_user_stories(self, crewai_trigger_payload: dict = None):
-
+        pm_icon = "👹👹👹👹👹👹👹👹"
+        pm_agent_name = f"Demon King PM"
         print(f"{pm_icon} {pm_agent_name} Generating user stories{pm_icon}")
         with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
             requirements = f.read()
@@ -38,14 +37,9 @@ class ScrumFlow(Flow[ScrumState]):
         self.state.user_stories_created = result.raw
 
     @listen(generate_user_stories)
-    def save_user_stories(self):
-        print(f"{pm_icon} {pm_agent_name} Saving user stories to file")
-        with open("docs/crew/trading_simulation.md", "w") as f:
-            f.write(self.state.user_stories_created)
-
-
-    @listen(save_user_stories)
     def create_technical_design(self):
+        tl_icon = "😈😈😈😈😈😈😈😈"
+        tl_agent_name = f"Tech Lead Devil"
         print(f"{tl_icon} {tl_agent_name} Creating technical design{tl_icon}")
         result = (
             TechLeadDevilCrew()
@@ -59,11 +53,11 @@ class ScrumFlow(Flow[ScrumState]):
         print(f"{tl_icon} {tl_agent_name} Technical design created{tl_icon}", result.raw)
         self.state.technical_design_created = result.raw
 
-    @listen(create_technical_design)
-    def save_technical_design(self):
-        print(f"{tl_icon} {tl_agent_name} Saving technical design to file")
-        with open("docs/crew/technical_design.md", "w") as f:
-            f.write(self.state.technical_design_created)
+    # @listen(create_technical_design)
+    # def save_technical_design(self):
+    #     print(f"{tl_icon} {tl_agent_name} Saving technical design to file")
+    #     with open("docs/crew/technical_design.md", "w") as f:
+    #         f.write(self.state.technical_design_created)
 
 def kickoff():
     scrum_flow = ScrumFlow()
@@ -72,7 +66,7 @@ def kickoff():
 
 def plot():
     scrum_flow = ScrumFlow()
-    scrum_flow.plot()
+    scrum_flow.plot("scrum_flow.html")
 
 
 def run_with_trigger():

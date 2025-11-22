@@ -176,3 +176,4 @@ technical_design_task:
     - ✅ Define clear testing strategies for QA validation
     - ✅ Be version-controlled and maintainable as requirements evolve    
   agent: engineering_lead
+  output_file: /docs/crew/trading_simulation_technical_design.md
