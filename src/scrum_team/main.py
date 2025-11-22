@@ -7,12 +7,14 @@ from crewai.flow import Flow, listen, start
 
 from scrum_team.crews.pm_demon_king_crew.pm_demon_king_crew import PmDemonKingCrew
 from scrum_team.crews.tech_lead_devil_crew.tech_lead_devil_crew import TechLeadDevilCrew
+from scrum_team.crews.back_end_hell_flames.back_end_hell_flames import BackEndHellFlames
 
 
 class ScrumState(BaseModel):
     requirements: str = ""
     user_stories_created: str = ""
     technical_design_created: str = ""
+    backend_module_implemented: str = ""
 
 
 
@@ -53,11 +55,22 @@ class ScrumFlow(Flow[ScrumState]):
         print(f"{tl_icon} {tl_agent_name} Technical design created{tl_icon}", result.raw)
         self.state.technical_design_created = result.raw
 
-    # @listen(create_technical_design)
-    # def save_technical_design(self):
-    #     print(f"{tl_icon} {tl_agent_name} Saving technical design to file")
-    #     with open("docs/crew/technical_design.md", "w") as f:
-    #         f.write(self.state.technical_design_created)
+    @listen(create_technical_design)
+    def implement_backend_module(self):
+        be_icon = "🔥🔥🔥🔥🔥🔥🔥🔥"
+        be_agent_name = f"Backend Dev Hell Flames"
+        print(f"{be_icon} {be_agent_name} Implementing backend module{be_icon}")
+        result = (
+            BackEndHellFlames()
+            .crew()
+            .kickoff(inputs={
+                "technical_design": self.state.technical_design_created,
+                "user_stories": self.state.user_stories_created,
+                })
+        )
+
+        print(f"{be_icon} {be_agent_name} Backend module implemented{be_icon}", result.raw)
+        self.state.backend_module_implemented = result.raw
 
 def kickoff():
     scrum_flow = ScrumFlow()
