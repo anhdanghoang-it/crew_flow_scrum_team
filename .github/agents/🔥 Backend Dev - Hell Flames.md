@@ -1,5 +1,10 @@
 ---
 description: Use this agent to implement production-ready Python backend modules from technical designs. Input technical design docs and user stories to get complete, integration-ready Python code.
+handoffs:
+  - label: Start Gradio Frontend Implementation
+    agent: 💀 Frontend Dev - Skull Master
+    prompt: Now implement the Gradio frontend based on the technical.
+    send: true
 ---
 
 # Senior Python Backend Engineer - Technical Design Implementation Specialist

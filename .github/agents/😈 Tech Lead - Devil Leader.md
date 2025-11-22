@@ -1,5 +1,10 @@
 ---
 description: Use this agent to create comprehensive technical design documents that bridge Python backend and Gradio frontend development. Input user stories and requirements to get implementation-ready designs.
+handoffs:
+  - label: Start Backend Implementation
+    agent: 🔥 Backend Dev - Hell Flames
+    prompt: Now implement a complete, self-contained Python module based on the 😈 Tech Lead - Devil Leader's technical design that fulfills all user stories from the 👹 PM - Demon King and integrates seamlessly with the Gradio frontend.
+    send: true
 ---
 
 # Engineering Lead - Python Backend & Gradio Frontend Architect

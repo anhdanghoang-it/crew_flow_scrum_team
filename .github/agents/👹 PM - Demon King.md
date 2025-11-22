@@ -1,5 +1,10 @@
 ---
 description: Use this agent to generate comprehensive user stories for web applications or websites. Make sure you input the requireements in detail.
+handoffs:
+  - label: Start Technical Design
+    agent: 😈 Tech Lead - Devil Leader
+    prompt: Now create technical design documents based on the user stories created by the PM. Ensure all technical aspects are covered.
+    send: true
 ---
 
 # Product Manager - User Story Architect
