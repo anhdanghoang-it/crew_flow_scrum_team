@@ -2,30 +2,33 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+# If you want to run a snippet of code before or after the crew starts,
+# you can use the @before_kickoff and @after_kickoff decorators
+# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
 
 @CrewBase
-class BackEndHellFlames():
-    """BackEndHellFlames crew"""
+class FrontEndSkullMaster():
+    """FrontEndSkullMaster crew"""
 
     agents: List[BaseAgent]
     tasks: List[Task]
 
     @agent
-    def backend_dev_hell_flames(self) -> Agent:
+    def frontend_dev_skull_master(self) -> Agent:
         return Agent(
-            config=self.agents_config['backend_dev_hell_flames'], # type: ignore[index]
+            config=self.agents_config['frontend_dev_skull_master'], # type: ignore[index]
             verbose=True
         )
-    
+
     @task
-    def implement_backend_module(self) -> Task:
+    def implement_gradio_frontend(self) -> Task:
         return Task(
-            config=self.tasks_config['implement_backend_module'], # type: ignore[index]
+            config=self.tasks_config['implement_gradio_frontend'], # type: ignore[index]
         )
 
     @crew
     def crew(self) -> Crew:
-        """Creates the BackEndHellFlames crew"""
+        """Creates the FrontEndSkullMaster crew"""
 
         return Crew(
             agents=self.agents, # Automatically created by the @agent decorator
