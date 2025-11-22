@@ -19,61 +19,85 @@ class ScrumState(BaseModel):
     backend_module_implemented: str = ""
 
 class ScrumFlow(Flow[ScrumState]):
+    @start()
+    def generate_user_stories(self, crewai_trigger_payload: dict = None):
+        pm_icon = "👹👹👹👹👹👹👹👹"
+        pm_agent_name = f"Demon King PM"
+        print(f"{pm_icon} {pm_agent_name} Generating user stories {pm_icon}")
+        with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
+            requirements = f.read()
+        self.state.requirements = requirements
+        result = (
+            PmDemonKingCrew()
+            .crew()
+            .kickoff(inputs={"requirements": self.state.requirements})
+        )
+
+        print(f"{pm_icon} {pm_agent_name} User stories generated{pm_icon}", result.raw)
+        self.state.user_stories_created = result.raw
+
+    @listen(generate_user_stories)
+    def create_technical_design(self):
+        tl_icon = "😈😈😈😈😈😈😈😈"
+        tl_agent_name = f"Tech Lead Devil"
+        print(f"{tl_icon} {tl_agent_name} Creating technical design {tl_icon}")
+        result = (
+            TechLeadDevilCrew()
+            .crew()
+            .kickoff(inputs={
+                "user_stories": self.state.user_stories_created,
+                "requirements": self.state.requirements,
+                "module_name": self.state.module_name,
+                "class_name": self.state.class_name,
+                })
+        )
+
+        print(f"{tl_icon} {tl_agent_name} Technical design created {tl_icon}", result.raw)
+        self.state.technical_design_created = result.raw
+
+    @listen(create_technical_design)
+    def implement_backend_module(self):
+        be_icon = "🔥🔥🔥🔥🔥🔥🔥🔥"
+        be_agent_name = f"Backend Dev Hell Flames"
+        print(f"{be_icon} {be_agent_name} Implementing backend module {be_icon}")
+        result = (
+            BackEndHellFlames()
+            .crew()
+            .kickoff(inputs={
+                "technical_design": self.state.technical_design_created,
+                "user_stories": self.state.user_stories_created,
+                "module_name": self.state.module_name,
+                "class_name": self.state.class_name,
+                })
+        )
+
+        print(f"{be_icon} {be_agent_name} Backend module implemented {be_icon}", result.raw)
+        self.state.backend_module_implemented = result.raw
+
+    @listen(implement_backend_module)
+    def implement_frontend_module(self):
+        fe_icon = "💀💀💀💀💀💀💀💀"
+        fe_agent_name = f"Frontend Dev Skull Master"
+        print(f"{fe_icon} {fe_agent_name} Implementing frontend module {fe_icon}")
+        result = (
+            FrontEndSkullMaster()
+            .crew()
+            .kickoff(inputs={
+                "backend_module": self.state.backend_module_implemented,
+                "technical_design": self.state.technical_design_created,
+                "user_stories": self.state.user_stories_created,
+                "module_name": self.state.module_name,
+                "class_name": self.state.class_name,
+                })
+        )
+
+        print(f"{fe_icon} {fe_agent_name} Frontend module implemented {fe_icon}", result.raw)
+
     # @start()
-    # def generate_user_stories(self, crewai_trigger_payload: dict = None):
-    #     pm_icon = "👹👹👹👹👹👹👹👹"
-    #     pm_agent_name = f"Demon King PM"
-    #     print(f"{pm_icon} {pm_agent_name} Generating user stories {pm_icon}")
-    #     with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
-    #         requirements = f.read()
-    #     self.state.requirements = requirements
-    #     result = (
-    #         PmDemonKingCrew()
-    #         .crew()
-    #         .kickoff(inputs={"requirements": self.state.requirements})
-    #     )
-
-    #     print(f"{pm_icon} {pm_agent_name} User stories generated{pm_icon}", result.raw)
-    #     self.state.user_stories_created = result.raw
-
-    # @listen(generate_user_stories)
-    # def create_technical_design(self):
-    #     tl_icon = "😈😈😈😈😈😈😈😈"
-    #     tl_agent_name = f"Tech Lead Devil"
-    #     print(f"{tl_icon} {tl_agent_name} Creating technical design {tl_icon}")
-    #     result = (
-    #         TechLeadDevilCrew()
-    #         .crew()
-    #         .kickoff(inputs={
-    #             "user_stories": self.state.user_stories_created,
-    #             "requirements": self.state.requirements,
-    #             })
-    #     )
-
-    #     print(f"{tl_icon} {tl_agent_name} Technical design created {tl_icon}", result.raw)
-    #     self.state.technical_design_created = result.raw
-
-    # @listen(create_technical_design)
-    # def implement_backend_module(self):
-    #     be_icon = "🔥🔥🔥🔥🔥🔥🔥🔥"
-    #     be_agent_name = f"Backend Dev Hell Flames"
-    #     print(f"{be_icon} {be_agent_name} Implementing backend module {be_icon}")
-    #     result = (
-    #         BackEndHellFlames()
-    #         .crew()
-    #         .kickoff(inputs={
-    #             "technical_design": self.state.technical_design_created,
-    #             "user_stories": self.state.user_stories_created,
-    #             })
-    #     )
-
-    #     print(f"{be_icon} {be_agent_name} Backend module implemented {be_icon}", result.raw)
-    #     self.state.backend_module_implemented = result.raw
-
-    # @listen(implement_backend_module)
     # def implement_frontend_module(self):
     #     fe_icon = "💀💀💀💀💀💀💀💀"
     #     fe_agent_name = f"Frontend Dev Skull Master"
+    #     self.load_context()
     #     print(f"{fe_icon} {fe_agent_name} Implementing frontend module {fe_icon}")
     #     result = (
     #         FrontEndSkullMaster()
@@ -85,25 +109,7 @@ class ScrumFlow(Flow[ScrumState]):
     #             })
     #     )
 
-    #     print(f"{fe_icon} {fe_agent_name} Frontend module implemented {fe_icon}", result.raw)
-
-    @start()
-    def implement_frontend_module(self):
-        fe_icon = "💀💀💀💀💀💀💀💀"
-        fe_agent_name = f"Frontend Dev Skull Master"
-        self.load_context()
-        print(f"{fe_icon} {fe_agent_name} Implementing frontend module {fe_icon}")
-        result = (
-            FrontEndSkullMaster()
-            .crew()
-            .kickoff(inputs={
-                "backend_module": self.state.backend_module_implemented,
-                "technical_design": self.state.technical_design_created,
-                "user_stories": self.state.user_stories_created,
-                })
-        )
-
-        print(f"{fe_icon} {fe_agent_name} Frontend module implemented {fe_icon}", result.raw)        
+    #     print(f"{fe_icon} {fe_agent_name} Frontend module implemented {fe_icon}", result.raw)        
 
     def load_context(self):
         print(f"Loading requirements from docs/requirements.md")
