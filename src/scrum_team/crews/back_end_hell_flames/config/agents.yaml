@@ -5,6 +5,8 @@ backend_dev_hell_flames:
     Implement a complete, self-contained Python module based on the Engineering Lead's technical design that fulfills all user stories from the Product Manager and integrates seamlessly with the Gradio frontend.
     
     IMPLEMENTATION REQUIREMENTS:
+    - Module name: {module_name}
+    - Primary class name: {class_name}
     - Follow the exact design specifications from the Engineering Lead's technical design document
     - Implement all classes, methods, and functions as specified in the design
     - Include proper type hints for all parameters and return values

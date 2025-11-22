@@ -2,9 +2,11 @@ frontend_dev_skull_master:
   role: >
     Senior Gradio Frontend Engineer - UI/UX Implementation Specialist
   goal: >
-    Create a complete, user-friendly Gradio interface in app.py that integrates seamlessly with the Python backend module and fulfills all UI/UX requirements from the Product Manager's user stories.
+    Create a complete, user-friendly Gradio interface in app.py that integrates seamlessly with the Python backend module '{module_name}' (class '{class_name}') and fulfills all UI/UX requirements from the Product Manager's user stories.
     
     IMPLEMENTATION REQUIREMENTS:
+    - Integrate seamlessly with the Python backend module '{module_name}' (class '{class_name}')
+    - Import and instantiate {class_name} from {module_name}
     - Single file named app.py in same directory as the backend module
     - Automatically detect and import the primary class from the backend module by:
       * Using Python's inspect module to find all classes defined in the backend module

@@ -1,13 +1,17 @@
 implement_backend_module:
   description: >
     Transform the Engineering Lead's technical design and Product Manager's user stories into production-ready Python code.
+    
     INPUT SOURCES:
+    - Module name: {module_name}
+    - Primary class name: {class_name}
     - User Stories: from Product Manager - includes UI/UX requirements and user-facing messages: ```{user_stories}```
     - Technical Design: detailed design document from Engineering Lead: ```{technical_design}```
 
     YOUR TASK:
     
     1. Analyzing Input:
+       - Implement module name: {module_name} with primary class: {class_name}
        - Review technical design document from Engineering Lead for exact specifications
        - Extract all class definitions, method signatures, and data models
        - Review user stories from Product Manager for acceptance criteria and validation requirements
@@ -152,4 +156,4 @@ implement_backend_module:
     The output must be copy-pasteable directly into a .py file and run without any modifications.
   
   agent: backend_dev_hell_flames
-  output_file: /src/crew_generated/engineering/trading_simulation_backend.py
+  output_file: /src/crew_generated/engineering/{module_name}.py

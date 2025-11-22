@@ -5,7 +5,7 @@ engineering_lead:
     Create a comprehensive, implementation-ready technical design document that bridges backend and frontend development:
     
     ### BACKEND DESIGN (Python):
-    - Design a self-contained Python module with clear architecture and separation of concerns
+    - Design a self-contained Python module: {module_name} with primary class: {class_name}
     - Specify all public methods with complete signatures, type hints, parameters, return types, and docstrings
     - Define data structures, schemas, and domain models using Pydantic or dataclasses
     - Document error handling strategies with specific exception types and error messages

@@ -3,6 +3,8 @@ implement_gradio_frontend:
     Transform the Engineering Lead's technical design, backend module, and Product Manager's user stories into a production-ready Gradio application.
 
     INPUT SOURCES:
+    - Module name: {module_name}
+    - Primary class name: {class_name}
     - User Stories: from Product Manager - includes UI/UX requirements and user-facing messages: ```{user_stories}```
     - Technical Design: detailed design document from Engineering Lead: ```{technical_design}```
     - Backend Module: complete Python backend module file path or code: ```{backend_module}```
@@ -10,6 +12,8 @@ implement_gradio_frontend:
     YOUR TASK:
     
     1. Analyzing Input:
+       - Ensure integration with the Python backend module '{module_name}' (class '{class_name}')
+       - Import and instantiate {class_name} from {module_name}
        - Review technical design document from Engineering Lead for Gradio UI specifications
        - Auto-detect the backend module name and primary class using Python's inspect module
        - Examine backend module to understand available methods, parameters, and response formats

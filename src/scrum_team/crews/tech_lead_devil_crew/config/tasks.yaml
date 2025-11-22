@@ -2,7 +2,9 @@ technical_design_task:
   description: >
     INPUT SOURCES:
     - User Stories: from Product Manager - includes UI/UX requirements and user-facing messages: ```{user_stories}```
-    - Business Requirements: raw client requirements for the software feature: ```{requirements}``
+    - Business Requirements: raw client requirements for the software feature: ```{requirements}```
+    - Module Name: Python module name to design: ```{module_name}```
+    - Class Name: Primary class name to implement: ```{class_name}```
 
     ## Your Task
 
@@ -13,8 +15,10 @@ technical_design_task:
       - Extract technical requirements from business requirements
       - Identify data models, workflows, and integration points
       - Clarify ambiguities and technical constraints
+      - Use the specified module name: {module_name} and primary class name: {class_name}
 
     2. **Designing Backend (Python)**:
+      - Design a self-contained Python module: {module_name} with primary class: {class_name}
       - Define module structure with clear responsibility boundaries
       - Specify all classes, methods, and functions with complete signatures
       - Create data models using Pydantic or dataclasses
@@ -176,4 +180,4 @@ technical_design_task:
     - ✅ Define clear testing strategies for QA validation
     - ✅ Be version-controlled and maintainable as requirements evolve    
   agent: engineering_lead
-  output_file: /docs/crew/trading_simulation_technical_design.md
+  output_file: /docs/crew/{module_name}_technical_design.md
