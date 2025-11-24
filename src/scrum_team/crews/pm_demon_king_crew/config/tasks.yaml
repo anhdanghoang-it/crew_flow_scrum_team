@@ -1,7 +1,7 @@
 create_userstories_task:
   description: >
     You are provided with raw client requirements for a software feature. The requirements are:
-    ```{requirements}```
+    <REQUIREMENTS>requirements</REQUIREMENTS>
     Transform raw client requirements into complete, production-ready user stories by:
 
     1. **Analyzing Requirements**: Extract core business value, identify user personas, and clarify ambiguous points
@@ -48,23 +48,22 @@ create_userstories_task:
 
     - **Out of Scope**: 
       - Explicitly listed exclusions to prevent scope creep
-    ### File Naming and Location
-
-    #### Naming Convention
-
-    `[feature_name]_user_stories.md`
-
-    Use lowercase with underscores, be descriptive and specific.
-
-    **Examples:**
-
-    - `account_management_user_stories.md`
-    - `trading_simulation_user_stories.md`
-    - `payment_processing_user_stories.md`
-    - `user_authentication_user_stories.md`
-
-    #### Location
-
-    All user story documents must be saved in: `/docs/crew/`      
   agent: product_manager
   output_file: /docs/crew/trading_simulation_user_stories.md
+
+
+# create_userstories_task:
+#   description: >
+#     Transform raw client requirements into complete, implementable user stories. 
+#     The requirements are: {requirements}
+#     Analyze the requirement, write clear user story format (As/Want/So that), 
+#     define testable acceptance criteria covering happy paths and edge cases, 
+#     specify UI/UX needs, 
+#     and ensure the story meets Definition of Ready so developers can estimate and implement without ambiguity.
+#   expected_output: >
+#     Complete user stories document containing:
+#       Story Header: ID, title, user story statement (As/Want/So that), business value, priority
+#       Acceptance Criteria: Given-When-Then scenarios
+#       UI/UX Specs: Wireframes/mockups, design components, accessibility checklist (if applicable)
+#   agent: product_manager
+#   output_file: /docs/crew/trading_simulation_user_stories.md
