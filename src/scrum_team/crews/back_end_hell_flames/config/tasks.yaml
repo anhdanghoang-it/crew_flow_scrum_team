@@ -1,159 +1,292 @@
+# implement_backend_module:
+#   description: >
+#     Transform the Engineering Lead's technical design and Product Manager's user stories into production-ready Python code.
+    
+#     INPUT SOURCES:
+#     - Module name: {module_name}
+#     - Primary class name: {class_name}
+#     - User Stories: from Product Manager - includes UI/UX requirements and user-facing messages: ```{user_stories}```
+#     - Technical Design: detailed design document from Engineering Lead: ```{technical_design}```
+
+#     YOUR TASK:
+    
+#     1. Analyzing Input:
+#        - Implement module name: {module_name} with primary class: {class_name}
+#        - Review technical design document from Engineering Lead for exact specifications
+#        - Extract all class definitions, method signatures, and data models
+#        - Review user stories from Product Manager for acceptance criteria and validation requirements
+#        - Identify all user-facing messages (success, error, info) to implement
+#        - Clarify data flow and integration points with Gradio frontend
+    
+#     2. Implementing Backend Module:
+#        - Create module with exact structure specified in technical design
+#        - Implement all classes with complete method signatures and type hints
+#        - Add comprehensive docstrings (Google or NumPy style as specified)
+#        - Implement all data models using Pydantic or dataclasses as designed
+#        - Create custom exception hierarchy as specified
+#        - Implement all business logic to fulfill user story requirements
+    
+#     3. Ensuring Frontend Integration:
+#        - Return structured responses: {'success': bool, 'message': str, 'data': Any}
+#        - Format data for Gradio components (DataFrames for tables, lists for dropdowns, etc.)
+#        - Implement all user-facing messages from user stories
+#        - Ensure error messages are actionable and user-friendly
+#        - Handle edge cases with appropriate error responses
+    
+#     4. Quality Assurance:
+#        - Validate all inputs with clear error messages
+#        - Handle all edge cases defined in user stories
+#        - Follow PEP 8 style guidelines
+#        - Ensure code is self-contained and testable
+#        - Verify all acceptance criteria are met
+#        - Include usage examples in docstrings
+    
+#     5. Delivering Production-Ready Code:
+#        - Output pure Python code only (no markdown, no explanations)
+#        - Code must be directly executable as a .py file
+#        - No placeholders, TODOs, or incomplete implementations
+#        - Ready for immediate Gradio frontend integration
+#        - Ready for unit testing and QA validation
+    
+#     INPUTS PROVIDED:
+#     - Technical design document with class definitions, method signatures, and architecture
+#     - User stories with acceptance criteria and validation requirements
+#     - Feature name and module name for file naming
+    
+#     MODULE STRUCTURE REQUIREMENTS:
+    
+#     1. Module-Level Documentation with:
+#        - Module name and purpose
+#        - Brief description of functionality
+#        - List of classes with descriptions
+#        - List of functions with descriptions
+#        - Usage example
+#        - Dependencies list
+    
+#     2. Imports (grouped and sorted):
+#        - Standard library imports
+#        - Third-party imports
+#        - Local imports
+#        - Type hints from typing module
+    
+#     3. Constants and Configuration:
+#        - Module-level constants
+#        - Configuration values
+#        - Default settings
+#        - Named constants replacing magic numbers
+    
+#     4. Custom Exception Classes:
+#        - Exception hierarchy as specified in design
+#        - Clear error messages
+#        - Error codes for programmatic handling
+    
+#     5. Data Models:
+#        - Using Pydantic BaseModel or dataclasses
+#        - Complete field definitions with type hints
+#        - Validators for all constraints
+    
+#     6. Primary Class Implementation:
+#        - Complete initialization
+#        - All public methods with type hints and docstrings
+#        - Structured return values for Gradio integration
+#        - Private helper methods
+#        - Usage examples in docstrings
+    
+#     7. Supporting Classes and Functions:
+#        - Helper classes as specified
+#        - Utility functions
+#        - Data transformation functions
+#        - Validation functions
+    
+#     CODE QUALITY CHECKLIST - Your implementation MUST satisfy ALL of these:
+#     ✅ Follows exact specifications from technical design document
+#     ✅ Implements all user story requirements and acceptance criteria
+#     ✅ Includes comprehensive type hints for all functions and methods
+#     ✅ Contains detailed docstrings with examples for all public APIs
+#     ✅ Returns structured responses compatible with Gradio UI display
+#     ✅ Implements all user-facing messages from user stories
+#     ✅ Validates all inputs with clear error messages
+#     ✅ Handles all edge cases and error scenarios
+#     ✅ Follows PEP 8 style guidelines
+#     ✅ Is self-contained and testable without modifications
+#     ✅ Contains NO markdown formatting, code fences, or explanatory text
+#     ✅ Is production-ready with zero placeholders or TODOs
+#     ✅ Starts directly with imports or module docstring
+  
+#   expected_output: >
+#     A complete, production-ready Python module file containing:
+    
+#     CRITICAL OUTPUT FORMAT:
+#     - Pure Python code ONLY
+#     - NO markdown code fences (```)
+#     - NO explanatory text before or after the code
+#     - NO comments outside the module itself
+#     - Directly saveable to a .py file
+#     - Immediately executable
+    
+#     START your response with either:
+#     - """ (module docstring), or
+#     - import / from (if no module docstring)
+    
+#     DO NOT START with:
+#     - "```python"
+#     - "Here's the implementation:"
+#     - "# Implementation"
+#     - Any explanatory text
+    
+#     The code must include:
+    
+#     1. Module docstring with overview, classes, functions, usage example, and dependencies
+#     2. All imports properly organized
+#     3. Constants and configuration values
+#     4. Custom exception classes with proper error handling
+#     5. Data models using Pydantic or dataclasses
+#     6. Primary class with:
+#        - Complete __init__ method
+#        - All public methods returning {'success': bool, 'message': str, 'data': Any}
+#        - Comprehensive type hints
+#        - Detailed docstrings with examples
+#        - Input validation
+#        - Error handling
+#     7. Helper classes and utility functions as needed
+    
+#     File naming: [feature_name]_[module_name].py
+#     Save location: /src/crew_generated/engineering/
+    
+#     The output must be copy-pasteable directly into a .py file and run without any modifications.
+  
+#   agent: backend_dev_hell_flames
+  # output_file: /src/crew_generated/engineering/trading_simulation.py
+
+
 implement_backend_module:
   description: >
-    Transform the Engineering Lead's technical design and Product Manager's user stories into production-ready Python code.
+    Implement a complete, self-contained Python backend module based on the Engineering Lead's technical design
+    that fulfills all user stories from the Product Manager.
     
     INPUT SOURCES:
+    - Technical Design: from Engineering Lead - PRIMARY specification to follow.
+    - Here are the technical design details: <TECHNICAL_DESIGN>{technical_design}</TECHNICAL_DESIGN>
+    - User Stories: from Product Manager - acceptance criteria and requirements.
+    - Here are the user stories: <USER_STORIES>{user_stories}</USER_STORIES>
+    
+    IMPLEMENTATION REQUIREMENTS:
     - Module name: {module_name}
     - Primary class name: {class_name}
-    - User Stories: from Product Manager - includes UI/UX requirements and user-facing messages: ```{user_stories}```
-    - Technical Design: detailed design document from Engineering Lead: ```{technical_design}```
-
-    YOUR TASK:
+    - Follow the exact Python backend design specifications from the Engineering Lead's technical design document
+    - Implement all classes, methods, and functions as specified in the design
+    - Include proper type hints for all parameters and return values
+    - Add comprehensive docstrings for all classes and methods
+    - Implement robust error handling with specific exception types as defined in the design
+    - Return structured responses (dict with success/error messages, data) suitable for Gradio UI display
+    - Ensure code is immediately testable without external dependencies
+    - Make the module ready for Gradio frontend integration
     
-    1. Analyzing Input:
-       - Implement module name: {module_name} with primary class: {class_name}
-       - Review technical design document from Engineering Lead for exact specifications
-       - Extract all class definitions, method signatures, and data models
-       - Review user stories from Product Manager for acceptance criteria and validation requirements
-       - Identify all user-facing messages (success, error, info) to implement
-       - Clarify data flow and integration points with Gradio frontend
+    USER STORY FULFILLMENT:
+    - Implement all functionality required by user stories from the Product Manager
+    - Ensure all acceptance criteria from user stories are met
+    - Handle all edge cases and error scenarios defined in user stories
+    - Implement all success and error messages as specified in user stories
+    - Validate inputs according to user story requirements
     
-    2. Implementing Backend Module:
-       - Create module with exact structure specified in technical design
-       - Implement all classes with complete method signatures and type hints
-       - Add comprehensive docstrings (Google or NumPy style as specified)
-       - Implement all data models using Pydantic or dataclasses as designed
-       - Create custom exception hierarchy as specified
-       - Implement all business logic to fulfill user story requirements
+    CODE QUALITY STANDARDS:
+    - Follow PEP 8 style guidelines
+    - Use descriptive variable and function names
+    - Include input validation for all user inputs
+    - Handle edge cases and boundary conditions
+    - Write clean, maintainable, and well-documented code
+    - Use constants or configuration instead of hard-coded values
     
-    3. Ensuring Frontend Integration:
-       - Return structured responses: {'success': bool, 'message': str, 'data': Any}
-       - Format data for Gradio components (DataFrames for tables, lists for dropdowns, etc.)
-       - Implement all user-facing messages from user stories
-       - Ensure error messages are actionable and user-friendly
-       - Handle edge cases with appropriate error responses
-    
-    4. Quality Assurance:
-       - Validate all inputs with clear error messages
-       - Handle all edge cases defined in user stories
-       - Follow PEP 8 style guidelines
-       - Ensure code is self-contained and testable
-       - Verify all acceptance criteria are met
-       - Include usage examples in docstrings
-    
-    5. Delivering Production-Ready Code:
-       - Output pure Python code only (no markdown, no explanations)
-       - Code must be directly executable as a .py file
-       - No placeholders, TODOs, or incomplete implementations
-       - Ready for immediate Gradio frontend integration
-       - Ready for unit testing and QA validation
-    
-    INPUTS PROVIDED:
-    - Technical design document with class definitions, method signatures, and architecture
-    - User stories with acceptance criteria and validation requirements
-    - Feature name and module name for file naming
-    
-    MODULE STRUCTURE REQUIREMENTS:
-    
-    1. Module-Level Documentation with:
-       - Module name and purpose
-       - Brief description of functionality
-       - List of classes with descriptions
-       - List of functions with descriptions
-       - Usage example
-       - Dependencies list
-    
-    2. Imports (grouped and sorted):
-       - Standard library imports
-       - Third-party imports
-       - Local imports
-       - Type hints from typing module
-    
-    3. Constants and Configuration:
-       - Module-level constants
-       - Configuration values
-       - Default settings
-       - Named constants replacing magic numbers
-    
-    4. Custom Exception Classes:
-       - Exception hierarchy as specified in design
-       - Clear error messages
-       - Error codes for programmatic handling
-    
-    5. Data Models:
-       - Using Pydantic BaseModel or dataclasses
-       - Complete field definitions with type hints
-       - Validators for all constraints
-    
-    6. Primary Class Implementation:
-       - Complete initialization
-       - All public methods with type hints and docstrings
-       - Structured return values for Gradio integration
-       - Private helper methods
-       - Usage examples in docstrings
-    
-    7. Supporting Classes and Functions:
-       - Helper classes as specified
-       - Utility functions
-       - Data transformation functions
-       - Validation functions
-    
-    CODE QUALITY CHECKLIST - Your implementation MUST satisfy ALL of these:
-    ✅ Follows exact specifications from technical design document
-    ✅ Implements all user story requirements and acceptance criteria
-    ✅ Includes comprehensive type hints for all functions and methods
-    ✅ Contains detailed docstrings with examples for all public APIs
-    ✅ Returns structured responses compatible with Gradio UI display
-    ✅ Implements all user-facing messages from user stories
-    ✅ Validates all inputs with clear error messages
-    ✅ Handles all edge cases and error scenarios
-    ✅ Follows PEP 8 style guidelines
-    ✅ Is self-contained and testable without modifications
-    ✅ Contains NO markdown formatting, code fences, or explanatory text
-    ✅ Is production-ready with zero placeholders or TODOs
-    ✅ Starts directly with imports or module docstring
-  
   expected_output: >
-    A complete, production-ready Python module file containing:
+    A JSON object with two properties:
     
-    CRITICAL OUTPUT FORMAT:
-    - Pure Python code ONLY
-    - NO markdown code fences (```)
+    {
+      "code": "Complete Python module code as string",
+      "module_name": "{module_name}"
+    }
+    
+    The "code" property must contain a complete, production-ready Python module with:
+    
+    STRUCTURE:
+    - Module-level docstring with overview and usage examples
+    - All necessary imports
+    - Primary class '{class_name}' fully implemented
+    - All supporting classes, functions, and data structures
+    - Type hints for all parameters and return values
+    - Comprehensive docstrings for all classes and methods
+    
+    FUNCTIONALITY:
+    - All backend methods as specified in the technical design
+    - Structured response format: dict with 'success' (bool), 'message' (str), 'data' (any)
+    - Complete error handling with specific exception types
+    - Input validation for all parameters
+    - Edge case handling as per user stories
+    
+    QUALITY:
+    - PEP 8 compliant code
+    - Self-contained, no external dependencies beyond standard library (unless specified in design)
+    - Production-ready, immediately testable code
+    - Ready for Gradio UI integration
+    - No placeholder code, TODOs, or stubs
+
+    IMPORTANT:
+    - The "code" field must contain ONLY raw Python code
+    - NO markdown formatting, backticks, or code fences (```)
     - NO explanatory text before or after the code
     - NO comments outside the module itself
-    - Directly saveable to a .py file
-    - Immediately executable
+    - The code must be valid Python that can be saved directly to a .py file
+    - Start directly with imports or module docstring
     
-    START your response with either:
-    - """ (module docstring), or
-    - import / from (if no module docstring)
-    
-    DO NOT START with:
-    - "```python"
-    - "Here's the implementation:"
-    - "# Implementation"
-    - Any explanatory text
-    
-    The code must include:
-    
-    1. Module docstring with overview, classes, functions, usage example, and dependencies
-    2. All imports properly organized
-    3. Constants and configuration values
-    4. Custom exception classes with proper error handling
-    5. Data models using Pydantic or dataclasses
-    6. Primary class with:
-       - Complete __init__ method
-       - All public methods returning {'success': bool, 'message': str, 'data': Any}
-       - Comprehensive type hints
-       - Detailed docstrings with examples
-       - Input validation
-       - Error handling
-    7. Helper classes and utility functions as needed
-    
-    File naming: [feature_name]_[module_name].py
-    Save location: /src/crew_generated/engineering/
-    
-    The output must be copy-pasteable directly into a .py file and run without any modifications.
-  
+    The "module_name" property should be the {module_name}.
   agent: backend_dev_hell_flames
-  output_file: /src/crew_generated/engineering/{module_name}.py
+
+write_python_backend_task:
+  description: >
+    Receive the Python code from implement_backend_module task and clean it by removing any
+    unwanted formatting while preserving the actual code unchanged, then save it to the output file.
+    
+    INPUT:
+    - Receives code from the backend_dev_hell_flames agent via implement_backend_module task
+    - The code may contain markdown formatting, code fences, or explanatory text
+    
+    CLEANING REQUIREMENTS:
+    - Remove markdown code fences: ```, ```python, ```py, or similar markers
+    - Remove any explanatory text before the actual Python code starts
+    - Remove any explanatory text after the actual Python code ends
+    - Remove lines like "Here's the implementation:", "The code is:", etc.
+    - Identify the start of actual Python code (first import statement or module docstring """)
+    - Identify the end of actual Python code (last line of executable code)
+    - Strip everything outside these boundaries
+    
+    PRESERVATION REQUIREMENTS (CRITICAL):
+    - NEVER modify the actual Python code itself
+    - NEVER change imports, function names, class names, or logic
+    - NEVER alter docstrings, comments within the code, or formatting
+    - NEVER add, remove, or modify any lines of the actual implementation
+    - Preserve ALL whitespace, indentation, and structure of the code
+    - The code functionality must remain 100% identical to the input
+    
+    OUTPUT REQUIREMENTS:
+    - Pure, executable Python code only
+    - No markdown, no code fences, no backticks
+    - No explanatory text before or after the code
+    - Ready to save directly to a .py file
+    - Ready for immediate execution without any modifications
+    
+  expected_output: >
+    Clean, production-ready Python code saved to the output file.
+    
+    The output must be:
+    - Pure Python code that starts with imports or module docstring
+    - Free of all markdown formatting and code fences
+    - Free of any explanatory text or preambles
+    - Functionally identical to the input code (only formatting cleanup applied)
+    - Immediately executable as a valid Python module
+    - All imports, classes, functions, and logic preserved exactly as received
+    
+    File format: Valid .py file with proper Python syntax
+    
+  agent: code_writer_agent
+  context:
+    - implement_backend_module
+  output_file: /src/crew_generated/engineering/trading_simulation.py
