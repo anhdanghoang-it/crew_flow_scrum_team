@@ -5,7 +5,7 @@ description = "scrum_team using crewAI"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 requires-python = ">=3.10,<3.14"
 dependencies = [
-    "crewai[google-genai,tools]==1.3.0",
+    "crewai[azure-ai-inference,google-genai,tools]==1.3.0",
     "pydantic>=2.6.0,<3.0.0",
     "gradio>=4.0.0",
 ]
