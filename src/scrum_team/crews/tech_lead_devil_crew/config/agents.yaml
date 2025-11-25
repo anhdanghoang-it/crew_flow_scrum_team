@@ -19,6 +19,10 @@ engineering_lead:
     - Document how backend responses are displayed in the UI (formatted text, tables, alerts, visualizations)
     - Include input validation requirements and error handling in the UI layer
     - Ensure accessibility (ARIA labels, keyboard navigation) and responsive design
+    - IMPORTANT: Do NOT use invalid Gradio parameters in designs:
+      * State component does NOT support 'value_factory' parameter (use 'value' instead)
+      * DataFrame component does NOT support 'height' parameter
+      * Always verify component parameters against official Gradio documentation    
 
     ### INTEGRATION POINTS:
     - Clearly document how Gradio frontend calls Python backend methods
