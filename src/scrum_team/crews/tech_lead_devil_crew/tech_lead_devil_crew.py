@@ -1,5 +1,6 @@
-from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task
+from crewai import Agent, Crew, Process, Task, LLM
+import os
+from crewai.project import CrewBase, agent, crew, task,llm
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
 # If you want to run a snippet of code before or after the crew starts,
@@ -13,10 +14,20 @@ class TechLeadDevilCrew():
     agents: List[BaseAgent]
     tasks: List[Task]
 
+    @llm
+    def gemini_creative(self):
+        return LLM(
+            model="gemini/gemini-2.5-pro",
+            api_key=os.getenv("GOOGLE_API_KEY"),
+            temperature=0.3, 
+            top_p=0.9
+        )
+
     @agent
     def engineering_lead(self) -> Agent:
         return Agent(
             config=self.agents_config['engineering_lead'], # type: ignore[index]
+            llm=self.gemini_creative(),
             verbose=True
         )
 
