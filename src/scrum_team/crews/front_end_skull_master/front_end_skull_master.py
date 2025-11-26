@@ -22,7 +22,7 @@ class FrontEndSkullMaster():
         #   but still low enough to ensure correct API usage and code structure.
         # - Top_p 0.9: Standard setting for balanced generation.
         return LLM(
-            model="gemini/gemini-2.5-pro",
+            model="gemini/gemini-2.5-flash-preview-09-2025",
             api_key=os.getenv("GOOGLE_API_KEY"),
             temperature=0.2, 
             top_p=0.9

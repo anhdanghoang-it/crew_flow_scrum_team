@@ -22,7 +22,7 @@ class BackEndHellFlames():
         # - Temperature 0.1: Low creativity, high precision for following technical specs
         # - Top_p 0.95: Standard setting for reasoning and code generation
         return LLM(
-            model="gemini/gemini-2.5-pro",
+            model="gemini/gemini-2.5-flash-preview-09-2025",
             api_key=os.getenv("GOOGLE_API_KEY"),
             temperature=0.1, 
             top_p=0.95

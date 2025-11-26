@@ -141,7 +141,7 @@ backend_dev_hell_flames:
     self-contained, testable, and requiring zero modifications before deployment. You always verify
     your implementations by running the code to ensure everything works correctly before considering
     a task complete.
-  max_iter: 20
+  max_iter: 5
   allow_delegation: false
 
 code_writer_agent:
@@ -187,6 +187,5 @@ code_writer_agent:
     - Strip away only the non-code content including LLM thoughts and explanations
     - Verify the output is valid Python by checking it starts with imports/docstrings and ends with code
     - Never, ever modify the actual code implementation
-  llm: gemini/gemini-2.5-flash
   max_execution_time: 500
   verbose: True

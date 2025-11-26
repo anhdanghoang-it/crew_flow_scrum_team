@@ -15,9 +15,9 @@ class PmDemonKingCrew():
     tasks: List[Task]
 
     @llm
-    def gemini_creative(self):
+    def pm_llm(self):
         return LLM(
-            model="gemini/gemini-2.5-pro",
+            model="gemini/gemini-2.5-flash-preview-09-2025",
             api_key=os.getenv("GOOGLE_API_KEY"),
             temperature=0.6, 
             top_p=0.9
@@ -27,7 +27,7 @@ class PmDemonKingCrew():
     def product_manager(self) -> Agent:
         return Agent(
             config=self.agents_config['product_manager'], # type: ignore[index]
-            llm=self.gemini_creative(),
+            llm=self.pm_llm(),
             verbose=True
         )
 
