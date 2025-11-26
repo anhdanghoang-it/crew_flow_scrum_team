@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 from random import randint
-
+import os
 from pydantic import BaseModel
-
+import re
 from crewai.flow import Flow, listen, start
 
 from scrum_team.crews.pm_demon_king_crew.pm_demon_king_crew import PmDemonKingCrew
@@ -11,12 +11,13 @@ from scrum_team.crews.back_end_hell_flames.back_end_hell_flames import BackEndHe
 from scrum_team.crews.front_end_skull_master.front_end_skull_master import FrontEndSkullMaster
 
 class ScrumState(BaseModel):
-    module_name: str = f"trading_simulation"
-    class_name: str = f"TradingSimulation"
+    module_name: str = "trading_simulation"
+    class_name: str = "TradingSimulation"
     requirements: str = ""
     user_stories_created: str = ""
     technical_design_created: str = ""
     backend_module_implemented: str = ""
+    frontend_module_implemented: str = ""
 
 class ScrumFlow(Flow[ScrumState]):
     @start()
@@ -30,7 +31,9 @@ class ScrumFlow(Flow[ScrumState]):
         result = (
             PmDemonKingCrew()
             .crew()
-            .kickoff(inputs={"requirements": self.state.requirements})
+            .kickoff(inputs={
+                "requirements": self.state.requirements,
+            })
         )
 
         print(f"{pm_icon} {pm_agent_name} User stories generated{pm_icon}", result.raw)
@@ -57,6 +60,7 @@ class ScrumFlow(Flow[ScrumState]):
 
     @listen(create_technical_design)
     def implement_backend_module(self):
+        self._load_context()
         be_icon = "🔥🔥🔥🔥🔥🔥🔥🔥"
         be_agent_name = f"Backend Dev Hell Flames"
         print(f"{be_icon} {be_agent_name} Implementing backend module {be_icon}")
@@ -73,6 +77,15 @@ class ScrumFlow(Flow[ScrumState]):
 
         print(f"{be_icon} {be_agent_name} Backend module implemented {be_icon}", result.raw)
         self.state.backend_module_implemented = result.raw
+
+
+    @listen(implement_backend_module)
+    def save_backend_module(self):
+        self._save_code_to_file(
+            self.state.backend_module_implemented, 
+            f"{self.state.module_name}.py", 
+            "backend module"
+        )
 
     @listen(implement_backend_module)
     def implement_frontend_module(self):
@@ -92,41 +105,106 @@ class ScrumFlow(Flow[ScrumState]):
         )
 
         print(f"{fe_icon} {fe_agent_name} Frontend module implemented {fe_icon}", result.raw)
+        self.state.frontend_module_implemented = result.raw
 
-    # @start()
-    # def implement_frontend_module(self):
-    #     fe_icon = "💀💀💀💀💀💀💀💀"
-    #     fe_agent_name = f"Frontend Dev Skull Master"
-    #     self.load_context()
-    #     print(f"{fe_icon} {fe_agent_name} Implementing frontend module {fe_icon}")
-    #     result = (
-    #         FrontEndSkullMaster()
-    #         .crew()
-    #         .kickoff(inputs={
-    #             "backend_module": self.state.backend_module_implemented,
-    #             "technical_design": self.state.technical_design_created,
-    #             "user_stories": self.state.user_stories_created,
-    #             })
-    #     )
+    @listen(implement_frontend_module)
+    def save_frontend_module(self):
+        self._save_code_to_file(
+            self.state.frontend_module_implemented, 
+            "app.py", 
+            "frontend module"
+        )
+    
+    def _save_code_to_file(self, content, filename, log_description):
+        print(f"💾 Saving {log_description} to file...")
+        
+        # 1. Remove "Thought:" blocks (common in ReAct agents)
+        # Handles single line or multi-line thoughts if they are clearly marked
+        content = re.sub(r'^Thought:.*$', '', content, flags=re.MULTILINE)
+        
+        # 2. Extract code from markdown fences if present
+        # Matches ```python ... ``` or ``` ... ```
+        code_block_pattern = r"```(?:python|py)?\s*(.*?)```"
+        match = re.search(code_block_pattern, content, re.DOTALL | re.IGNORECASE)
+        if match:
+            print("  - Found markdown code block, extracting content...")
+            content = match.group(1)
+            
+        # 3. Clean up common conversational fillers at the start
+        content = content.strip()
+        lines = content.split('\n')
+        start_idx = 0
+        for i, line in enumerate(lines):
+            stripped = line.strip()
+            if not stripped:
+                continue
+            
+            # Skip lines starting with "Thought:" (in case regex missed it or it's inside the block)
+            if stripped.startswith("Thought:"):
+                continue
+                
+            # Skip filename outputs like "filename.py"
+            if stripped.endswith(".py") and len(stripped.split()) == 1:
+                continue
 
-    #     print(f"{fe_icon} {fe_agent_name} Frontend module implemented {fe_icon}", result.raw)        
+            # If line starts with import, from, class, def, @, or """, it's likely code
+            if stripped.startswith(('import ', 'from ', 'class ', 'def ', '@', '"""', "'''", '#')):
+                start_idx = i
+                break
+            
+            # If line looks like conversation, keep skipping
+            if stripped.lower().startswith(('here is', 'sure', 'the code', 'below is', 'i have', 'creating', 'implementing')):
+                continue
+            
+            # If we hit something else, assume it's code (or we can't tell)
+            start_idx = i
+            break
+            
+        content = "\n".join(lines[start_idx:])
+        
+        # Create the output directory if it doesn't exist
+        output_dir = "src/crew_generated/engineering"
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Write to file
+        output_path = f"{output_dir}/{filename}"
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(content)
+        
+        print(f"✅ {log_description} saved to {output_path}")
 
-    def load_context(self):
-        print(f"Loading requirements from docs/requirements.md")
-        with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
-            self.state.requirements = f.read()
+    def _load_context(self):
+        requirements_path = "docs/requirements.md"
+        if os.path.exists(requirements_path):
+            print(f"Loading requirements from {requirements_path}")
+            with open(requirements_path, "r", encoding="utf-8") as f:
+                self.state.requirements = f.read()
+        else:
+            print(f"File not found: {requirements_path}")
 
-        print(f"Loading user stories from docs/crew/trading_simulation_user_stories.md")
-        with open(f"docs/crew/trading_simulation_user_stories.md", "r", encoding="utf-8") as f:
-            self.state.user_stories_created = f.read()
+        user_stories_path = "docs/crew/trading_simulation_user_stories.md"
+        if os.path.exists(user_stories_path):
+            print(f"Loading user stories from {user_stories_path}")
+            with open(user_stories_path, "r", encoding="utf-8") as f:
+                self.state.user_stories_created = f.read()
+        else:
+            print(f"File not found: {user_stories_path}")
 
-        print(f"Loading technical design from docs/crew/trading_simulation_technical_design.md")
-        with open(f"docs/crew/trading_simulation_technical_design.md", "r", encoding="utf-8") as f:
-            self.state.technical_design_created = f.read()
+        technical_design_path = "docs/crew/trading_simulation_technical_design.md"
+        if os.path.exists(technical_design_path):
+            print(f"Loading technical design from {technical_design_path}")
+            with open(technical_design_path, "r", encoding="utf-8") as f:
+                self.state.technical_design_created = f.read()
+        else:
+            print(f"File not found: {technical_design_path}")
 
-        print(f"Loading backend module implementation from src/crew_generated/engineering/trading_simulation_backend.py")
-        with open(f"src/crew_generated/engineering/trading_simulation_backend.py", "r", encoding="utf-8") as f:
-            self.state.backend_module_implemented = f.read()
+        # backend_module_path = "src/crew_generated/engineering/trading_simulation_backend.py"
+        # if os.path.exists(backend_module_path):
+        #     print(f"Loading backend module implementation from {backend_module_path}")
+        #     with open(backend_module_path, "r", encoding="utf-8") as f:
+        #         self.state.backend_module_implemented = f.read()
+        # else:
+        #     print(f"File not found: {backend_module_path}")
 
 def kickoff():
     scrum_flow = ScrumFlow()
