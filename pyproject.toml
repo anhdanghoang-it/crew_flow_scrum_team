@@ -8,6 +8,7 @@ dependencies = [
     "crewai[azure-ai-inference,google-genai,tools]==1.3.0",
     "pydantic>=2.6.0,<3.0.0",
     "gradio>=4.0.0",
+    "requests>=2.31.0",
 ]
 
 [project.scripts]

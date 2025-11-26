@@ -72,8 +72,11 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
+  //   command: 'uv run src/crew_generated/engineering/app.py',
+  //   url: 'http://127.0.0.1:7860',
   //   reuseExistingServer: !process.env.CI,
+  //   timeout: 120 * 1000, // 2 minutes for Gradio to start
+  //   stdout: 'pipe',
+  //   stderr: 'pipe',
   // },
 });
