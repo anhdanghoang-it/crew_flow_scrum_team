@@ -1,224 +1,365 @@
+# implement_gradio_frontend:
+#   description: >
+#     Transform the Engineering Lead's technical design, backend module, and Product Manager's user stories into a production-ready Gradio application.
+
+#     INPUT SOURCES:
+#     - Module name: {module_name}
+#     - Primary class name: {class_name}
+#     - User Stories: from Product Manager - includes UI/UX requirements and user-facing messages: ```{user_stories}```
+#     - Technical Design: detailed design document from Engineering Lead: ```{technical_design}```
+#     - Backend Module: complete Python backend module file path or code: ```{backend_module}```
+
+#     YOUR TASK:
+    
+#     1. Analyzing Input:
+#        - Ensure integration with the Python backend module '{module_name}' (class '{class_name}')
+#        - Import and instantiate {class_name} from {module_name}
+#        - Review technical design document from Engineering Lead for Gradio UI specifications
+#        - Auto-detect the backend module name and primary class using Python's inspect module
+#        - Examine backend module to understand available methods, parameters, and response formats
+#        - Review user stories from Product Manager for UI/UX requirements and user-facing messages
+#        - Identify all user workflows and interaction patterns to implement
+#        - Map backend methods to appropriate Gradio components as specified
+    
+#     2. Designing UI Layout:
+#        - Create Gradio Blocks layout matching the technical design specifications
+#        - Organize components using Tabs, Rows, and Columns for logical grouping
+#        - Design user workflows from input → action → feedback
+#        - Ensure responsive layout that works on different screen sizes
+#        - Prioritize visual hierarchy for primary vs secondary actions
+    
+#     3. Implementing Components:
+#        - Create Gradio components for each backend method as specified in design
+#        - Add clear labels, descriptions, and placeholders for all inputs
+#        - Include example values and demo sections
+#        - Implement proper component properties (interactive, visible, elem_id, etc.)
+#        - Configure appropriate component types (Textbox, Number, Dropdown, etc.)
+    
+#     4. Implementing Event Handlers:
+#        - Create handler functions that call backend methods
+#        - Implement input validation before backend calls
+#        - Parse backend responses ({'success': bool, 'message': str, 'data': Any})
+#        - Display success messages using gr.Info()
+#        - Display error messages using gr.Error() or gr.Warning()
+#        - Format data for display in UI components
+    
+#     5. Ensuring User Experience:
+#        - Add application title, description, and usage instructions
+#        - Include all user-facing messages from user stories
+#        - Implement error handling with helpful, actionable messages
+#        - Add loading states for long-running operations
+#        - Ensure accessibility (labels, ARIA attributes)
+#        - Test user workflows for intuitiveness
+    
+#     6. Testing and Verification:
+#        - YOU MUST run the Gradio application to verify it works
+#        - Test that the interface launches successfully
+#        - Verify all UI components render correctly
+#        - Test all event handlers and backend integrations
+#        - Confirm all user workflows function as designed
+#        - Test input validation and error handling in the UI
+#        - Verify all user-facing messages display correctly
+#        - Test with example data to ensure proper data flow
+#        - Fix any runtime errors, import issues, or UI bugs discovered
+#        - Re-run and re-test after fixes until the application works flawlessly
+    
+#     7. Delivering Production-Ready Code:
+#        - Output pure Python code only (no markdown, no explanations)
+#        - Code must be directly executable as app.py
+#        - Include proper launch configuration
+#        - Ready for immediate deployment
+#        - No placeholders, TODOs, or incomplete implementations
+    
+#     INPUTS PROVIDED:
+#     - Technical design document with Gradio UI specifications
+#     - Backend module file path or backend module code
+#     - User stories with UI/UX requirements and user-facing messages
+    
+#     APPLICATION STRUCTURE REQUIREMENTS:
+    
+#     1. Imports and Auto-Detection:
+#        - Import gradio, inspect, importlib.util, glob
+#        - Auto-detect backend module file (exclude app.py, __init__.py)
+#        - Import backend module dynamically
+#        - Find primary class (first non-exception class)
+#        - Instantiate backend class
+    
+#     2. Event Handler Functions:
+#        - Input validation before backend calls
+#        - Call backend methods with proper parameters
+#        - Parse response structure: {'success': bool, 'message': str, 'data': Any}
+#        - Display feedback using gr.Info(), gr.Warning(), gr.Error()
+#        - Return appropriate values for UI components
+    
+#     3. Gradio UI Layout using Blocks:
+#        - Header with title and description
+#        - Tabs for organizing multiple features
+#        - Rows and Columns for component layout
+#        - Input components with labels, placeholders, info text
+#        - Action buttons with appropriate variants
+#        - Output components for displaying results
+#        - Examples section with sample inputs
+#        - Footer with usage instructions
+    
+#     4. Launch Configuration:
+#        - if __name__ == "__main__":
+#        - app.launch() with appropriate parameters
+    
+#     GRADIO COMPONENT SELECTION GUIDE:
+    
+#     Input Components:
+#     - gr.Textbox: Text input (use lines, placeholder, info)
+#     - gr.Number: Numeric input (use minimum, maximum, step)
+#     - gr.Dropdown: Selection from options (use choices, multiselect)
+#     - gr.Slider: Visual numeric input for ranges
+#     - gr.Checkbox: Boolean input
+#     - gr.Radio: Single selection from visible options
+    
+#     Output Components:
+#     - gr.Markdown: Formatted text, messages, instructions
+#     - gr.JSON: Structured data display for dicts
+#     - gr.Dataframe: Tabular data display
+#     - gr.Textbox (read-only): Simple text output
+#     - gr.Label: Classification results
+#     - gr.Plot: Visualizations
+    
+#     Layout Components:
+#     - gr.Blocks: Main container
+#     - gr.Tabs: Organize features
+#     - gr.Row: Horizontal layout
+#     - gr.Column: Vertical layout
+#     - gr.Accordion: Collapsible sections
+#     - gr.Group: Group components
+    
+#     Feedback Components:
+#     - gr.Info(message): Success notifications (green)
+#     - gr.Warning(message): Warning notifications (yellow)
+#     - gr.Error(message): Error notifications (red)
+    
+#     CODE QUALITY CHECKLIST - Your implementation MUST satisfy ALL of these:
+#     ✅ Follows exact Gradio UI specifications from technical design document
+#     ✅ Integrates seamlessly with backend module
+#     ✅ Implements all UI/UX requirements from user stories
+#     ✅ Uses appropriate Gradio components for each backend method
+#     ✅ Displays all user-facing messages from user stories
+#     ✅ Includes input validation before backend calls
+#     ✅ Handles backend response structure correctly
+#     ✅ Provides clear, actionable error messages
+#     ✅ Includes application title, description, and usage instructions
+#     ✅ Adds examples and demo values for user guidance
+#     ✅ Uses Gradio Blocks for organized, responsive layout
+#     ✅ Implements proper event handlers and state management
+#     ✅ Contains NO markdown formatting, code fences, or explanatory text
+#     ✅ Is production-ready with zero placeholders or TODOs
+#     ✅ Starts with imports and ends with app.launch()
+#     ✅ Has been tested and verified to work correctly
+  
+#   expected_output: >
+#     A complete, production-ready Gradio application file (app.py) containing:
+    
+#     CRITICAL OUTPUT FORMAT:
+#     - Pure Python code ONLY
+#     - NO markdown code fences (```)
+#     - NO explanatory text before or after the code
+#     - NO comments outside the module itself
+#     - Directly saveable to a .py file
+#     - Immediately executable with python app.py
+    
+#     START your response with:
+#     - import gradio as gr
+#     - import inspect
+#     - import importlib.util
+#     - Auto-detection code to find and import the backend module and class
+    
+#     END your response with:
+#     - if __name__ == "__main__":
+#     -     app.launch()
+    
+#     DO NOT START with:
+#     - "```python"
+#     - "Here's the implementation:"
+#     - "# Gradio Application"
+#     - Any explanatory text
+    
+#     DO NOT END with:
+#     - "```"
+#     - Explanatory notes
+#     - Usage instructions outside the code
+    
+#     The code must include:
+    
+#     1. Imports and backend auto-detection:
+#        - Import gradio, inspect, glob, importlib.util
+#        - Auto-detect backend module file
+#        - Dynamically import backend module
+#        - Find and instantiate primary class
+    
+#     2. Event handler functions:
+#        - Input validation with gr.Warning() for invalid inputs
+#        - Backend method calls
+#        - Response parsing ({'success', 'message', 'data'})
+#        - gr.Info() for success, gr.Error() for errors
+#        - Return values formatted for UI components
+    
+#     3. Gradio Blocks layout:
+#        - Header with gr.Markdown title and description
+#        - gr.Tabs() for organizing features
+#        - gr.Row() and gr.Column() for layout
+#        - Input components with labels, placeholders, info
+#        - Action gr.Button() components
+#        - Output components for results
+#        - gr.Examples() with sample inputs
+#        - Footer with usage instructions
+    
+#     4. Launch configuration:
+#        - if __name__ == "__main__":
+#        - app.launch(share=False, server_name="0.0.0.0", server_port=7860)
+    
+#     File naming: app.py
+#     Save location: Same directory as backend module (typically /src/crew_generated/engineering/)
+    
+#     The output must be copy-pasteable directly into app.py and run without any modifications.
+  
+#   agent: frontend_dev_skull_master
+#   # output_file: /src/crew_generated/engineering/app.py
+
+
+
 implement_gradio_frontend:
   description: >
-    Transform the Engineering Lead's technical design, backend module, and Product Manager's user stories into a production-ready Gradio application.
-
+    Implement a complete, user-friendly Gradio frontend interface based on the Engineering Lead's technical design
+    that integrates seamlessly with the Python backend and fulfills all UI/UX requirements from the Product Manager's user stories.
+    
     INPUT SOURCES:
-    - Module name: {module_name}
-    - Primary class name: {class_name}
-    - User Stories: from Product Manager - includes UI/UX requirements and user-facing messages: ```{user_stories}```
-    - Technical Design: detailed design document from Engineering Lead: ```{technical_design}```
-    - Backend Module: complete Python backend module file path or code: ```{backend_module}```
-
-    YOUR TASK:
+    - User Stories: from Product Manager - UI/UX requirements and user-facing messages.
+    - Here are the user stories: <USER_STORIES>{user_stories}</USER_STORIES>
+    - Technical Design: from Engineering Lead - PRIMARY specification for Gradio UI design.
+    - Here are the technical design details: <TECHNICAL_DESIGN>{technical_design}</TECHNICAL_DESIGN>
+    - Backend Module: from Backend Engineer - Python backend to integrate with.
+    - Here is the backend module information: <BACKEND_MODULE>{backend_module}</BACKEND_MODULE>
     
-    1. Analyzing Input:
-       - Ensure integration with the Python backend module '{module_name}' (class '{class_name}')
-       - Import and instantiate {class_name} from {module_name}
-       - Review technical design document from Engineering Lead for Gradio UI specifications
-       - Auto-detect the backend module name and primary class using Python's inspect module
-       - Examine backend module to understand available methods, parameters, and response formats
-       - Review user stories from Product Manager for UI/UX requirements and user-facing messages
-       - Identify all user workflows and interaction patterns to implement
-       - Map backend methods to appropriate Gradio components as specified
+    IMPLEMENTATION REQUIREMENTS:
+    - File name: app.py
+    - Import and instantiate {class_name} from {module_name}
+    - Follow the exact Gradio frontend design specifications from the Engineering Lead's technical design document
+    - Map all backend methods to appropriate Gradio UI components as specified in the design
+    - Implement all user-facing messages (success, error, info, warnings) from user stories
+    - Create UI layout matching the design specifications
     
-    2. Designing UI Layout:
-       - Create Gradio Blocks layout matching the technical design specifications
-       - Organize components using Tabs, Rows, and Columns for logical grouping
-       - Design user workflows from input → action → feedback
-       - Ensure responsive layout that works on different screen sizes
-       - Prioritize visual hierarchy for primary vs secondary actions
+    UI/UX IMPLEMENTATION:
+    - Use appropriate Gradio components for each backend method:
+      * gr.Textbox for text input
+      * gr.Number for numeric input  
+      * gr.Dropdown for selection options
+      * gr.Button for action triggers
+      * gr.Dataframe or gr.JSON for structured data display
+      * gr.Markdown for formatted output and messages
+    - Implement proper input validation before calling backend methods
+    - Show all success and error messages as defined in technical design and user stories
+    - Include clear labels, descriptions, and placeholder examples
+    - Add demo/example section with pre-filled inputs showing typical usage
     
-    3. Implementing Components:
-       - Create Gradio components for each backend method as specified in design
-       - Add clear labels, descriptions, and placeholders for all inputs
-       - Include example values and demo sections
-       - Implement proper component properties (interactive, visible, elem_id, etc.)
-       - Configure appropriate component types (Textbox, Number, Dropdown, etc.)
+    TECHNICAL IMPLEMENTATION:
+    - Use Gradio Blocks for organized, flexible layout
+    - Handle backend response structure: {success: bool, message: str, data: any}
+    - Include application title, description, and usage instructions
+    - Use gr.Tabs or gr.Accordion for complex interfaces with multiple features
+    - Add example values for each input field where appropriate
+    - Ensure responsive layout and good UX practices
+    - Include app.launch() with appropriate parameters
     
-    4. Implementing Event Handlers:
-       - Create handler functions that call backend methods
-       - Implement input validation before backend calls
-       - Parse backend responses ({'success': bool, 'message': str, 'data': Any})
-       - Display success messages using gr.Info()
-       - Display error messages using gr.Error() or gr.Warning()
-       - Format data for display in UI components
-    
-    5. Ensuring User Experience:
-       - Add application title, description, and usage instructions
-       - Include all user-facing messages from user stories
-       - Implement error handling with helpful, actionable messages
-       - Add loading states for long-running operations
-       - Ensure accessibility (labels, ARIA attributes)
-       - Test user workflows for intuitiveness
-    
-    6. Testing and Verification:
-       - YOU MUST run the Gradio application to verify it works
-       - Test that the interface launches successfully
-       - Verify all UI components render correctly
-       - Test all event handlers and backend integrations
-       - Confirm all user workflows function as designed
-       - Test input validation and error handling in the UI
-       - Verify all user-facing messages display correctly
-       - Test with example data to ensure proper data flow
-       - Fix any runtime errors, import issues, or UI bugs discovered
-       - Re-run and re-test after fixes until the application works flawlessly
-    
-    7. Delivering Production-Ready Code:
-       - Output pure Python code only (no markdown, no explanations)
-       - Code must be directly executable as app.py
-       - Include proper launch configuration
-       - Ready for immediate deployment
-       - No placeholders, TODOs, or incomplete implementations
-    
-    INPUTS PROVIDED:
-    - Technical design document with Gradio UI specifications
-    - Backend module file path or backend module code
-    - User stories with UI/UX requirements and user-facing messages
-    
-    APPLICATION STRUCTURE REQUIREMENTS:
-    
-    1. Imports and Auto-Detection:
-       - Import gradio, inspect, importlib.util, glob
-       - Auto-detect backend module file (exclude app.py, __init__.py)
-       - Import backend module dynamically
-       - Find primary class (first non-exception class)
-       - Instantiate backend class
-    
-    2. Event Handler Functions:
-       - Input validation before backend calls
-       - Call backend methods with proper parameters
-       - Parse response structure: {'success': bool, 'message': str, 'data': Any}
-       - Display feedback using gr.Info(), gr.Warning(), gr.Error()
-       - Return appropriate values for UI components
-    
-    3. Gradio UI Layout using Blocks:
-       - Header with title and description
-       - Tabs for organizing multiple features
-       - Rows and Columns for component layout
-       - Input components with labels, placeholders, info text
-       - Action buttons with appropriate variants
-       - Output components for displaying results
-       - Examples section with sample inputs
-       - Footer with usage instructions
-    
-    4. Launch Configuration:
-       - if __name__ == "__main__":
-       - app.launch() with appropriate parameters
-    
-    GRADIO COMPONENT SELECTION GUIDE:
-    
-    Input Components:
-    - gr.Textbox: Text input (use lines, placeholder, info)
-    - gr.Number: Numeric input (use minimum, maximum, step)
-    - gr.Dropdown: Selection from options (use choices, multiselect)
-    - gr.Slider: Visual numeric input for ranges
-    - gr.Checkbox: Boolean input
-    - gr.Radio: Single selection from visible options
-    
-    Output Components:
-    - gr.Markdown: Formatted text, messages, instructions
-    - gr.JSON: Structured data display for dicts
-    - gr.Dataframe: Tabular data display
-    - gr.Textbox (read-only): Simple text output
-    - gr.Label: Classification results
-    - gr.Plot: Visualizations
-    
-    Layout Components:
-    - gr.Blocks: Main container
-    - gr.Tabs: Organize features
-    - gr.Row: Horizontal layout
-    - gr.Column: Vertical layout
-    - gr.Accordion: Collapsible sections
-    - gr.Group: Group components
-    
-    Feedback Components:
-    - gr.Info(message): Success notifications (green)
-    - gr.Warning(message): Warning notifications (yellow)
-    - gr.Error(message): Error notifications (red)
-    
-    CODE QUALITY CHECKLIST - Your implementation MUST satisfy ALL of these:
-    ✅ Follows exact Gradio UI specifications from technical design document
-    ✅ Integrates seamlessly with backend module
-    ✅ Implements all UI/UX requirements from user stories
-    ✅ Uses appropriate Gradio components for each backend method
-    ✅ Displays all user-facing messages from user stories
-    ✅ Includes input validation before backend calls
-    ✅ Handles backend response structure correctly
-    ✅ Provides clear, actionable error messages
-    ✅ Includes application title, description, and usage instructions
-    ✅ Adds examples and demo values for user guidance
-    ✅ Uses Gradio Blocks for organized, responsive layout
-    ✅ Implements proper event handlers and state management
-    ✅ Contains NO markdown formatting, code fences, or explanatory text
-    ✅ Is production-ready with zero placeholders or TODOs
-    ✅ Starts with imports and ends with app.launch()
-    ✅ Has been tested and verified to work correctly
-  
   expected_output: >
     A complete, production-ready Gradio application file (app.py) containing:
     
-    CRITICAL OUTPUT FORMAT:
-    - Pure Python code ONLY
-    - NO markdown code fences (```)
+    STRUCTURE:
+    - All necessary imports (gradio, {module_name})
+    - {class_name} instantiation from {module_name}
+    - Gradio UI component definitions
+    - Event handler functions for backend method calls
+    - Gradio Blocks layout with organized components
+    - Launch configuration
+    
+    FUNCTIONALITY:
+    - All Gradio UI components mapped to backend methods as per design
+    - Input validation before backend calls
+    - Backend response handling (success, message, data)
+    - Display of all user-facing messages from user stories
+    - Error handling with user-friendly feedback
+    - Example inputs for demonstration
+    
+    UI/UX:
+    - Clean, intuitive Gradio Blocks layout
+    - Clear labels and descriptions for all components
+    - Success and error message display
+    - Responsive design with tabs/accordions as needed
+    - Self-explanatory interface requiring no documentation
+    - Professional appearance with title and instructions
+    
+    QUALITY:
+    - PEP 8 compliant code
+    - Production-ready, immediately executable
+    - No placeholder code, TODOs, or stubs
+    - Seamless integration with {module_name} backend
+    
+    IMPORTANT:
+    - Output ONLY raw Python code
+    - NO markdown formatting, backticks, or code fences (```)
     - NO explanatory text before or after the code
     - NO comments outside the module itself
-    - Directly saveable to a .py file
-    - Immediately executable with python app.py
-    
-    START your response with:
-    - import gradio as gr
-    - import inspect
-    - import importlib.util
-    - Auto-detection code to find and import the backend module and class
-    
-    END your response with:
-    - if __name__ == "__main__":
-    -     app.launch()
-    
-    DO NOT START with:
-    - "```python"
-    - "Here's the implementation:"
-    - "# Gradio Application"
-    - Any explanatory text
-    
-    DO NOT END with:
-    - "```"
-    - Explanatory notes
-    - Usage instructions outside the code
-    
-    The code must include:
-    
-    1. Imports and backend auto-detection:
-       - Import gradio, inspect, glob, importlib.util
-       - Auto-detect backend module file
-       - Dynamically import backend module
-       - Find and instantiate primary class
-    
-    2. Event handler functions:
-       - Input validation with gr.Warning() for invalid inputs
-       - Backend method calls
-       - Response parsing ({'success', 'message', 'data'})
-       - gr.Info() for success, gr.Error() for errors
-       - Return values formatted for UI components
-    
-    3. Gradio Blocks layout:
-       - Header with gr.Markdown title and description
-       - gr.Tabs() for organizing features
-       - gr.Row() and gr.Column() for layout
-       - Input components with labels, placeholders, info
-       - Action gr.Button() components
-       - Output components for results
-       - gr.Examples() with sample inputs
-       - Footer with usage instructions
-    
-    4. Launch configuration:
-       - if __name__ == "__main__":
-       - app.launch(share=False, server_name="0.0.0.0", server_port=7860)
-    
-    File naming: app.py
-    Save location: Same directory as backend module (typically /src/crew_generated/engineering/)
-    
-    The output must be copy-pasteable directly into app.py and run without any modifications.
-  
+    - The response must be valid Python that can be saved directly to a .py file
+    - Start with imports (import gradio as gr, from {module_name} import {class_name})
+    - End with if __name__ == "__main__": app.launch()
   agent: frontend_dev_skull_master
+  output_file: /src/crew_generated/engineering/app.py
+
+write_python_frontend_task:
+  description: >
+    Receive the Gradio frontend code from implement_gradio_frontend task and clean it by removing any
+    unwanted formatting while preserving the actual code unchanged, then save it to the output file.
+    
+    INPUT:
+    - Receives Gradio app.py code from the frontend_dev_skull_master agent via implement_gradio_frontend task
+    - The code may contain markdown formatting, code fences, or explanatory text
+    
+    CLEANING REQUIREMENTS:
+    - Remove markdown code fences: ```, ```python, ```py, or similar markers
+    - Remove LLM explanations and thoughts (e.g., "Thought: ...")
+    - Remove any explanatory text before the actual Python code starts
+    - Remove any explanatory text after the actual Python code ends
+    - Remove lines like "Here's the Gradio app:", "The application code:", etc.
+    - Identify the start of actual Python code (first import statement)
+    - Identify the end of actual Python code (app.launch() or last executable line)
+    - Strip everything outside these boundaries
+    
+    PRESERVATION REQUIREMENTS (CRITICAL):
+    - NEVER modify the actual Python code itself
+    - NEVER change imports, function definitions, class instantiations, or logic
+    - NEVER alter Gradio component definitions, event handlers, or layout code
+    - NEVER add, remove, or modify any lines of the actual implementation
+    - Preserve ALL whitespace, indentation, and structure of the code
+    - The code functionality must remain 100% identical to the input
+    
+    OUTPUT REQUIREMENTS:
+    - Pure, executable Python code only
+    - No markdown, no code fences, no backticks
+    - No explanatory text before or after the code
+    - Ready to save directly to app.py file
+    - Ready for immediate execution with python app.py
+    
+  expected_output: >
+    Clean, production-ready Gradio application code saved to the output file.
+    
+    The output must be:
+    - Pure Python code that starts with imports (import gradio as gr, etc.)
+    - Free of all markdown formatting and code fences
+    - Free of any explanatory text or preambles
+    - Functionally identical to the input code (only formatting cleanup applied)
+    - Immediately executable as a Gradio application
+    - All imports, Gradio components, event handlers, and app.launch() preserved exactly as received
+    
+    File format: Valid app.py file ready to launch with python app.py
+    
+  agent: code_writer_agent
+  context:
+    - implement_gradio_frontend
   output_file: /src/crew_generated/engineering/app.py
