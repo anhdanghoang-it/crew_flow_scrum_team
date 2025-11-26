@@ -197,15 +197,20 @@ implement_backend_module:
     - Write clean, maintainable, and well-documented code
     - Use constants or configuration instead of hard-coded values
     
+    OUTPUT FORMAT (CRITICAL):
+    - Output ONLY raw Python code
+    - NO JSON wrapper or formatting
+    - NO markdown formatting, backticks, or code fences (```)
+    - NO explanatory text before or after the code
+    - NO comments outside the module itself
+    - The response must be valid Python that can be saved directly to a .py file
+    - Start directly with imports or module docstring (""")
+    - End with the last line of actual Python code
+    
   expected_output: >
-    A JSON object with two properties:
+    Complete, production-ready Python module code as raw text.
     
-    {
-      "code": "Complete Python module code as string",
-      "module_name": "{module_name}"
-    }
-    
-    The "code" property must contain a complete, production-ready Python module with:
+    The output must be pure Python code with:
     
     STRUCTURE:
     - Module-level docstring with overview and usage examples
@@ -229,16 +234,15 @@ implement_backend_module:
     - Ready for Gradio UI integration
     - No placeholder code, TODOs, or stubs
 
-    IMPORTANT:
-    - The "code" field must contain ONLY raw Python code
+    CRITICAL FORMAT REQUIREMENTS:
+    - Output ONLY raw Python code as plain text
+    - NO JSON structure, NO "code" property, NO "module_name" property
     - NO markdown formatting, backticks, or code fences (```)
     - NO explanatory text before or after the code
-    - NO comments outside the module itself
-    - The code must be valid Python that can be saved directly to a .py file
-    - Start directly with imports or module docstring
-    
-    The "module_name" property should be the {module_name}.
+    - Start directly with imports or module docstring (""")
+    - Must be directly saveable to a .py file without any modifications
   agent: backend_dev_hell_flames
+  output_file: /src/crew_generated/engineering/trading_simulation.py
 
 write_python_backend_task:
   description: >
@@ -251,6 +255,7 @@ write_python_backend_task:
     
     CLEANING REQUIREMENTS:
     - Remove markdown code fences: ```, ```python, ```py, or similar markers
+    - Remove LLM explanations and thoughts (e.g., "Thought: ...")
     - Remove any explanatory text before the actual Python code starts
     - Remove any explanatory text after the actual Python code ends
     - Remove lines like "Here's the implementation:", "The code is:", etc.

@@ -9,16 +9,6 @@ import re
 from pathlib import Path
 from pydantic import BaseModel, Field
 
-
-class BackendModuleOutput(BaseModel):
-    """Structured output for backend module implementation."""
-    code: str = Field(
-        description="Complete Python code for the backend module, ready to be saved as a .py file"
-    )
-    module_name: str = Field(
-        description="Name of the module (e.g., 'trading_simulation', 'account_management')"
-    )
-
 @CrewBase
 class BackEndHellFlames():
     """BackEndHellFlames crew"""
@@ -28,11 +18,26 @@ class BackEndHellFlames():
 
     @llm
     def gemini_creative(self):
+        # Best config for complex code implementation:
+        # - Temperature 0.1: Low creativity, high precision for following technical specs
+        # - Top_p 0.95: Standard setting for reasoning and code generation
         return LLM(
             model="gemini/gemini-2.5-pro",
             api_key=os.getenv("GOOGLE_API_KEY"),
-            temperature=0.3, 
-            top_p=0.85
+            temperature=0.1, 
+            top_p=0.95
+        )
+    
+    @llm
+    def gemini_flash_lite(self):
+        # Best config for code cleanup:
+        # - Temperature 0.0: Ensures deterministic output (no creativity/hallucinations)
+        # - Top_p 0.1: Restricts to only the most probable tokens (exact code reproduction)
+        return LLM(
+            model="gemini/gemini-2.5-flash-lite",
+            api_key=os.getenv("GOOGLE_API_KEY"),
+            temperature=0.0, 
+            top_p=0.1
         )
 
     @agent
@@ -49,6 +54,7 @@ class BackEndHellFlames():
     def code_writer_agent(self) -> Agent:
         return Agent(
             config=self.agents_config['code_writer_agent'], # type: ignore[index]
+            llm=self.gemini_flash_lite(),
             verbose=True
         )
     
@@ -56,7 +62,6 @@ class BackEndHellFlames():
     def implement_backend_module(self) -> Task:
         return Task(
             config=self.tasks_config['implement_backend_module'], # type: ignore[index]
-            output_pydantic=BackendModuleOutput,
         )
     
     @task
