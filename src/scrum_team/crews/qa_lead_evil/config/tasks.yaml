@@ -1,0 +1,35 @@
+create_test_plan:
+  description: >
+    Create a comprehensive test plan for the web application 
+    
+    INPUT SOURCES:
+    - User Stories: from Product Manager - acceptance criteria and requirements.
+    - Here are the user stories: <USER_STORIES>{user_stories}</USER_STORIES>
+    - Application URL: {application_url}
+    - Use the seed file at {seed_file_path} for browser setup.    
+    
+    Your tasks:
+    1. Read and analyze the user stories to extract features, acceptance criteria, and expected behaviors
+    2. Invoke planner_setup_page tool once with the seed file to set up the browser
+    3. Navigate to {application_url} and thoroughly explore the interface using browser tools
+    4. Map each user story to specific test scenarios that validate the requirements
+    5. Design test scenarios covering: requirement validation, happy paths, edge cases, error handling
+    6. Create detailed test scenarios with numbered steps, expected outcomes, and traceability to user stories
+    7. Save the complete test plan as a markdown file in /docs/crew/ with naming convention: {module_name}_test_plan.md
+    
+    Each test scenario must include:
+    - Reference to source user story ID
+    - Clear, descriptive title
+    - Step-by-step instructions
+    - Expected outcomes validating acceptance criteria
+    - Assumptions about starting state
+    - Success/failure conditions mapped to requirements
+  expected_output: >
+    A comprehensive test plan markdown file saved in /docs/crew/ that includes:
+    - Executive summary of the tested application
+    - Traceability matrix linking test scenarios to user stories
+    - Individual test scenarios with numbered steps and expected results
+    - Coverage of all acceptance criteria from user stories
+    - Professional formatting suitable for development and QA teams
+  agent: qa_lead_evil_tester
+  output_file: /docs/crew/trading_simulation_test_plan.md
