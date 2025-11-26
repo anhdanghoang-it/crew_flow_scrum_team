@@ -4,6 +4,9 @@ import os
 from pydantic import BaseModel
 import re
 from crewai.flow import Flow, listen, start
+import subprocess
+import time
+import requests
 
 from scrum_team.crews.pm_demon_king_crew.pm_demon_king_crew import PmDemonKingCrew
 from scrum_team.crews.tech_lead_devil_crew.tech_lead_devil_crew import TechLeadDevilCrew
@@ -20,100 +23,149 @@ class ScrumState(BaseModel):
     frontend_module_implemented: str = ""
 
 class ScrumFlow(Flow[ScrumState]):
+    # @start()
+    # def generate_user_stories(self, crewai_trigger_payload: dict = None):
+    #     pm_icon = "👹👹👹👹👹👹👹👹"
+    #     pm_agent_name = f"Demon King PM"
+    #     print(f"{pm_icon} {pm_agent_name} Generating user stories {pm_icon}")
+    #     with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
+    #         requirements = f.read()
+    #     self.state.requirements = requirements
+    #     result = (
+    #         PmDemonKingCrew()
+    #         .crew()
+    #         .kickoff(inputs={
+    #             "requirements": self.state.requirements,
+    #         })
+    #     )
+
+    #     print(f"{pm_icon} {pm_agent_name} User stories generated{pm_icon}", result.raw)
+    #     self.state.user_stories_created = result.raw
+
+    # @listen(generate_user_stories)
+    # def create_technical_design(self):
+    #     tl_icon = "😈😈😈😈😈😈😈😈"
+    #     tl_agent_name = f"Tech Lead Devil"
+    #     print(f"{tl_icon} {tl_agent_name} Creating technical design {tl_icon}")
+    #     result = (
+    #         TechLeadDevilCrew()
+    #         .crew()
+    #         .kickoff(inputs={
+    #             "user_stories": self.state.user_stories_created,
+    #             "requirements": self.state.requirements,
+    #             "module_name": self.state.module_name,
+    #             "class_name": self.state.class_name,
+    #             })
+    #     )
+
+    #     print(f"{tl_icon} {tl_agent_name} Technical design created {tl_icon}", result.raw)
+    #     self.state.technical_design_created = result.raw
+
+    # @listen(create_technical_design)
+    # def implement_backend_module(self):
+    #     be_icon = "🔥🔥🔥🔥🔥🔥🔥🔥"
+    #     be_agent_name = f"Backend Dev Hell Flames"
+    #     print(f"{be_icon} {be_agent_name} Implementing backend module {be_icon}")
+    #     result = (
+    #         BackEndHellFlames()
+    #         .crew()
+    #         .kickoff(inputs={
+    #             "technical_design": self.state.technical_design_created,
+    #             "user_stories": self.state.user_stories_created,
+    #             "module_name": self.state.module_name,
+    #             "class_name": self.state.class_name,
+    #             })
+    #     )
+
+    #     print(f"{be_icon} {be_agent_name} Backend module implemented {be_icon}", result.raw)
+    #     self.state.backend_module_implemented = result.raw
+
+
+    # @listen(implement_backend_module)
+    # def save_backend_module(self):
+    #     self._save_code_to_file(
+    #         self.state.backend_module_implemented, 
+    #         f"{self.state.module_name}.py", 
+    #         "backend module"
+    #     )
+
+    # @listen(implement_backend_module)
+    # def implement_frontend_module(self):
+    #     fe_icon = "💀💀💀💀💀💀💀💀"
+    #     fe_agent_name = f"Frontend Dev Skull Master"
+    #     print(f"{fe_icon} {fe_agent_name} Implementing frontend module {fe_icon}")
+    #     result = (
+    #         FrontEndSkullMaster()
+    #         .crew()
+    #         .kickoff(inputs={
+    #             "backend_module": self.state.backend_module_implemented,
+    #             "technical_design": self.state.technical_design_created,
+    #             "user_stories": self.state.user_stories_created,
+    #             "module_name": self.state.module_name,
+    #             "class_name": self.state.class_name,
+    #             })
+    #     )
+
+    #     print(f"{fe_icon} {fe_agent_name} Frontend module implemented {fe_icon}", result.raw)
+    #     self.state.frontend_module_implemented = result.raw
+
+    # @listen(implement_frontend_module)
+    # def save_frontend_module(self):
+    #     self._save_code_to_file(
+    #         self.state.frontend_module_implemented, 
+    #         "app.py", 
+    #         "frontend module"
+    #     )
+
+    # @listen(save_frontend_module)
     @start()
-    def generate_user_stories(self, crewai_trigger_payload: dict = None):
-        pm_icon = "👹👹👹👹👹👹👹👹"
-        pm_agent_name = f"Demon King PM"
-        print(f"{pm_icon} {pm_agent_name} Generating user stories {pm_icon}")
-        with open(f"docs/requirements.md", "r", encoding="utf-8") as f:
-            requirements = f.read()
-        self.state.requirements = requirements
-        result = (
-            PmDemonKingCrew()
-            .crew()
-            .kickoff(inputs={
-                "requirements": self.state.requirements,
-            })
+    def start_gradio_app(self):
+        app_icon = "🚀🚀🚀🚀🚀🚀🚀🚀"
+        print(f"{app_icon} Starting Gradio app server {app_icon}")
+        
+        app_path = "src/crew_generated/engineering/app.py"
+        url = "http://127.0.0.1:7860"
+        timeout = 120  # 2 minutes
+        
+        # Start the app in background
+        process = subprocess.Popen(
+            ["uv", "run", app_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
         )
-
-        print(f"{pm_icon} {pm_agent_name} User stories generated{pm_icon}", result.raw)
-        self.state.user_stories_created = result.raw
-
-    @listen(generate_user_stories)
-    def create_technical_design(self):
-        tl_icon = "😈😈😈😈😈😈😈😈"
-        tl_agent_name = f"Tech Lead Devil"
-        print(f"{tl_icon} {tl_agent_name} Creating technical design {tl_icon}")
-        result = (
-            TechLeadDevilCrew()
-            .crew()
-            .kickoff(inputs={
-                "user_stories": self.state.user_stories_created,
-                "requirements": self.state.requirements,
-                "module_name": self.state.module_name,
-                "class_name": self.state.class_name,
-                })
-        )
-
-        print(f"{tl_icon} {tl_agent_name} Technical design created {tl_icon}", result.raw)
-        self.state.technical_design_created = result.raw
-
-    @listen(create_technical_design)
-    def implement_backend_module(self):
-        self._load_context()
-        be_icon = "🔥🔥🔥🔥🔥🔥🔥🔥"
-        be_agent_name = f"Backend Dev Hell Flames"
-        print(f"{be_icon} {be_agent_name} Implementing backend module {be_icon}")
-        result = (
-            BackEndHellFlames()
-            .crew()
-            .kickoff(inputs={
-                "technical_design": self.state.technical_design_created,
-                "user_stories": self.state.user_stories_created,
-                "module_name": self.state.module_name,
-                "class_name": self.state.class_name,
-                })
-        )
-
-        print(f"{be_icon} {be_agent_name} Backend module implemented {be_icon}", result.raw)
-        self.state.backend_module_implemented = result.raw
-
-
-    @listen(implement_backend_module)
-    def save_backend_module(self):
-        self._save_code_to_file(
-            self.state.backend_module_implemented, 
-            f"{self.state.module_name}.py", 
-            "backend module"
-        )
-
-    @listen(implement_backend_module)
-    def implement_frontend_module(self):
-        fe_icon = "💀💀💀💀💀💀💀💀"
-        fe_agent_name = f"Frontend Dev Skull Master"
-        print(f"{fe_icon} {fe_agent_name} Implementing frontend module {fe_icon}")
-        result = (
-            FrontEndSkullMaster()
-            .crew()
-            .kickoff(inputs={
-                "backend_module": self.state.backend_module_implemented,
-                "technical_design": self.state.technical_design_created,
-                "user_stories": self.state.user_stories_created,
-                "module_name": self.state.module_name,
-                "class_name": self.state.class_name,
-                })
-        )
-
-        print(f"{fe_icon} {fe_agent_name} Frontend module implemented {fe_icon}", result.raw)
-        self.state.frontend_module_implemented = result.raw
-
-    @listen(implement_frontend_module)
-    def save_frontend_module(self):
-        self._save_code_to_file(
-            self.state.frontend_module_implemented, 
-            "app.py", 
-            "frontend module"
-        )
+        
+        print(f"  - Process started with PID: {process.pid}")
+        print(f"  - Waiting for server to be ready at {url}...")
+        
+        # Wait for server to be ready
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            try:
+                response = requests.get(url, timeout=1)
+                if response.status_code == 200:
+                    print(f"✅ Gradio app is running at {url}")
+                    print(f"  - Server ready in {time.time() - start_time:.2f} seconds")
+                    print(f"  - Press Ctrl+C to stop the server")
+                    
+                    # Keep the process running and stream output
+                    try:
+                        for line in process.stdout:
+                            print(line, end='')
+                    except KeyboardInterrupt:
+                        print(f"\n{app_icon} Stopping Gradio app {app_icon}")
+                        process.terminate()
+                        process.wait(timeout=5)
+                    return
+            except (requests.RequestException, Exception):
+                time.sleep(1)
+        
+        # Timeout reached
+        print(f"❌ Server did not start within {timeout} seconds")
+        process.terminate()
+        stderr = process.stderr.read() if process.stderr else ""
+        if stderr:
+            print(f"Error output:\n{stderr}")
     
     def _save_code_to_file(self, content, filename, log_description):
         print(f"💾 Saving {log_description} to file...")
