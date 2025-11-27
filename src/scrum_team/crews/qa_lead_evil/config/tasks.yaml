@@ -3,33 +3,121 @@ create_test_plan:
     Create a comprehensive test plan for the web application 
     
     INPUT SOURCES:
-    - User Stories: from Product Manager - acceptance criteria and requirements.
-    - Here are the user stories: <USER_STORIES>{user_stories}</USER_STORIES>
-    - Application URL: {application_url}
-    - Use the seed file at {seed_file_path} for browser setup.    
+    - You are given the User Stories: <USER_STORIES>{user_stories}</USER_STORIES>
+    - You are given the Application URL: {application_url}
+    - You are given the seed file at: {seed_file_path} for browser setup.  
     
-    Your tasks:
-    1. Read and analyze the user stories to extract features, acceptance criteria, and expected behaviors
-    2. Invoke planner_setup_page tool once with the seed file to set up the browser
-    3. Navigate to {application_url} and thoroughly explore the interface using browser tools
-    4. Map each user story to specific test scenarios that validate the requirements
-    5. Design test scenarios covering: requirement validation, happy paths, edge cases, error handling
-    6. Create detailed test scenarios with numbered steps, expected outcomes, and traceability to user stories
-    7. Save the complete test plan as a markdown file in /docs/crew/ with naming convention: {module_name}_test_plan.md
-    
-    Each test scenario must include:
-    - Reference to source user story ID
-    - Clear, descriptive title
-    - Step-by-step instructions
-    - Expected outcomes validating acceptance criteria
-    - Assumptions about starting state
-    - Success/failure conditions mapped to requirements
+    You will:
+    1. **Analyze User Stories**
+       - Review each user story to extract functional requirements and acceptance criteria
+       - Identify key features, user interactions, and edge cases described in the stories
+       
+    2. **Navigate and Explore**
+      - Invoke the `planner_setup_page` tool once to set up page before using any other tools
+      - Explore the browser snapshot
+      - Do not take screenshots unless absolutely necessary
+      - Use browser_* tools to navigate and discover interface
+      - Thoroughly explore the interface, identifying all interactive elements, forms, navigation paths, and functionality
+
+    3. **Analyze User Flows**
+      - Map out the primary user journeys and identify critical paths through the application
+      - Consider different user types and their typical behaviors
+
+    4. **Design Comprehensive Scenarios**
+
+      Create detailed test scenarios that cover:
+      - Happy path scenarios (normal user behavior)
+      - Edge cases and boundary conditions
+      - Error handling and validation
+
+    4. **Structure Test Plans**
+
+      Each scenario must include:
+      - test_id: Unique identifier (e.g., TS-1.1, TS-2.3)
+      - title: Clear, descriptive title
+      - detailed_steps: Detailed step-by-step instructions
+      - expected_outcomes: Expected outcomes where appropriate
+      - assumptions: Assumptions about starting state (always assume blank/fresh state)
+      - success_criteria: Success criteria and failure conditions
+
   expected_output: >
-    A comprehensive test plan markdown file saved in /docs/crew/ that includes:
-    - Executive summary of the tested application
-    - Traceability matrix linking test scenarios to user stories
-    - Individual test scenarios with numbered steps and expected results
-    - Coverage of all acceptance criteria from user stories
-    - Professional formatting suitable for development and QA teams
+    A structured JSON object conforming to TestPlanStructured model with the following example format:
+    <example-spec>
+    {
+      "module_name": "trading_simulation",
+      "executive_summary": "Comprehensive test plan covering core trading simulation functionality including account initialization, deposit operations, and dashboard display. Tests validate happy paths, edge cases, and error handling scenarios derived from user stories US-001 through US-003.",
+      "scenarios": [
+        {
+          "test_id": "TS-1.1",
+          "title": "Successful Account Initialization and Dashboard Display",
+          "source_user_story_id": "US-001",
+          "detailed_steps": [
+            {
+              "step_number": 1,
+              "action": "Navigate to the application URL",
+              "expected_outcome": "Application loads successfully and displays the main interface"
+            },
+            {
+              "step_number": 2,
+              "action": "Enter username 'trader123' in the username input field",
+              "expected_outcome": "Username is accepted and displayed in the input field"
+            },
+            {
+              "step_number": 3,
+              "action": "Click the 'Create Account' or 'Start Trading' button",
+              "expected_outcome": "Account is created and user is directed to the trading dashboard"
+            },
+            {
+              "step_number": 4,
+              "action": "Verify dashboard displays initial balance of $10,000",
+              "expected_outcome": "Dashboard shows balance of exactly $10,000.00"
+            }
+          ],
+          "expected_result": "User successfully creates an account with username 'trader123' and sees a trading dashboard displaying an initial balance of $10,000",
+          "user_story_detail": "As a user, I want to create a trading account with a username so that I can start with an initial balance of $10,000"
+        },
+        {
+          "test_id": "TS-2.1",
+          "title": "Successful Deposit of Valid Amount",
+          "source_user_story_id": "US-002",
+          "detailed_steps": [
+            {
+              "step_number": 1,
+              "action": "Create account with username 'depositor1' and verify initial balance",
+              "expected_outcome": "Account created with $10,000 initial balance displayed"
+            },
+            {
+              "step_number": 2,
+              "action": "Locate and click the 'Deposit' button or link",
+              "expected_outcome": "Deposit form or modal is displayed"
+            },
+            {
+              "step_number": 3,
+              "action": "Enter deposit amount of $500.00 in the amount field",
+              "expected_outcome": "Amount is accepted and displayed in the input field"
+            },
+            {
+              "step_number": 4,
+              "action": "Click 'Submit' or 'Confirm Deposit' button",
+              "expected_outcome": "Deposit is processed and confirmation message appears"
+            },
+            {
+              "step_number": 5,
+              "action": "Verify updated balance on dashboard",
+              "expected_outcome": "Balance displays $10,500.00 (initial $10,000 + $500 deposit)"
+            }
+          ],
+          "expected_result": "User successfully deposits $500, and the account balance increases from $10,000 to $10,500",
+          "user_story_detail": "As a user, I want to deposit funds into my account so that I can increase my trading balance"
+        }
+      ]
+    }
+    </example-spec>
+    REQUIREMENTS:
+    - All test scenarios must include complete detailed_steps with step_number, action, and expected_outcome
+    - Each scenario must reference a source_user_story_id
+    - Steps should include setup actions at the beginning (e.g., account creation, navigation)
+    - Expected results should be specific and measurable
+    - Cover happy paths, edge cases, and error validations from user stories
   agent: qa_lead_evil_tester
-  output_file: /docs/crew/trading_simulation_test_plan.md
+  output_file: /docs/crew/trading_simulation_test_plan.json

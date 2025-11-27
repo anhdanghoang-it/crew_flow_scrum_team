@@ -5,6 +5,7 @@ from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
 from mcp import StdioServerParameters
 from crewai_tools import MCPServerAdapter
+from .models import TestPlanStructured
 
 @CrewBase
 class QaLeadEvil():
@@ -44,6 +45,9 @@ class QaLeadEvil():
             config=self.agents_config['qa_lead_evil_tester'], # type: ignore[index]
             llm=self.qa_plan_llm(),
             tools=self.get_mcp_tools(),
+            max_execution_time=500,
+            reasoning=True,
+            max_reasoning_attempts=3,
             verbose=True
         )
 
@@ -51,6 +55,7 @@ class QaLeadEvil():
     def create_test_plan(self) -> Task:
         return Task(
             config=self.tasks_config['create_test_plan'], # type: ignore[index]
+            output_pydantic=TestPlanStructured,
         )
 
     @crew
@@ -61,6 +66,7 @@ class QaLeadEvil():
             agents=self.agents, # Automatically created by the @agent decorator
             tasks=self.tasks, # Automatically created by the @task decorator
             process=Process.sequential,
+            memory=True,
             verbose=True,
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )
