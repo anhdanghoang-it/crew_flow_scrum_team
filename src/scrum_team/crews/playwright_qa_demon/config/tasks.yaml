@@ -1,0 +1,139 @@
+generate_playwright_tests_task:
+  description: >
+    Convert a SINGLE test scenario into an executable Playwright test script.
+    
+    INPUT SOURCES:
+    - Application URL: {application_url}
+    - Seed File: {seed_file} (use for browser setup with generator_setup_page tool)
+    - Test Scenario (JSON): <TEST_SCENARIO>{test_scenario}</TEST_SCENARIO>
+      The test_scenario is a JSON object conforming to the TestScenario model containing:
+      - test_id: Unique test scenario identifier (e.g., TS-1.1, TS-2.3)
+      - title: Clear, descriptive title for the test scenario
+      - source_user_story_id: Reference to the source user story ID (e.g., US-001, US-002)
+      - detailed_steps: Ordered list of TestStep objects, each containing:
+        * step_number: Sequential step number starting from 1
+        * action: The action to perform in this step
+        * expected_outcome: The expected result after performing this action
+      - expected_result: Overall expected result or acceptance criteria validation for this scenario
+      - user_story_detail: Full text or relevant details from the associated user story for context
+    
+    You will:
+    - Obtain the test plan with all the steps and verification specification
+    - Run the `generator_setup_page` tool to set up page for the scenario
+    - For each step and verification in the scenario, do the following:
+      - Use Playwright tool to manually execute it in real-time.
+      - Use the step description as the intent for each Playwright tool call.
+    - Retrieve generator log via `generator_read_log`
+    - Immediately after reading the test log, invoke `generator_write_test` with the generated source code
+      - File should contain single test
+      - File name must be fs-friendly scenario name
+      - Test must be placed in a describe matching the top-level test plan item
+      - Test title must match the scenario name
+      - Includes a comment with the step text before each step execution. Do not duplicate comments if step requires
+        multiple actions.
+      - Always use best practices from the log when generating tests.
+    
+    File requirements:
+    - Naming: [test_id]_[source_user_story_id]_[title].spec.ts (remove spaces, special chars)
+    - Location: /e2e/
+  expected_output: >
+    A single executable Playwright test file saved in /e2e/ with naming convention:
+    [test_id]_[source_user_story_id]_[title].spec.ts
+    <example-generation>
+      For following plan:
+
+      ```json
+      		{
+            "test_id": "TS-1.1",
+            "title": "Successful Account Initialization and Dashboard Display (Happy Path)",
+            "source_user_story_id": "US-001",
+            "detailed_steps": [
+              {
+                "step_number": 1,
+                "action": "Navigate to the application URL (http://127.0.0.1:7860/).",
+                "expected_outcome": "Application loads successfully, displaying the 'Initial Setup' group and hiding the 'Portfolio Overview' group."
+              },
+              {
+                "step_number": 2,
+                "action": "Enter '100000.00' into the 'Initial Deposit' input field (ref: locator('#initial_deposit_input input')).",
+                "expected_outcome": "The value is correctly entered."
+              },
+              {
+                "step_number": 3,
+                "action": "Click the 'Start Simulation' button (ref: locator('#start_sim_button')).",
+                "expected_outcome": "The account state is initialized."
+              },
+              {
+                "step_number": 4,
+                "action": "Verify the 'Initial Setup' group is now hidden and the 'Portfolio Overview' group is visible.",
+                "expected_outcome": "UI transition is complete."
+              },
+              {
+                "step_number": 5,
+                "action": "Verify a success information message is displayed: 'Account initialized with a balance of $100,000.00.'.",
+                "expected_outcome": "The user receives positive feedback."
+              },
+              {
+                "step_number": 6,
+                "action": "Verify the 'Cash Balance' metric displays '$100,000.00'.",
+                "expected_outcome": "Cash balance reflects the initial deposit with correct currency formatting."
+              },
+              {
+                "step_number": 7,
+                "action": "Verify all main tabs ('Trade', 'Cash Management', 'Transaction History') are enabled.",
+                "expected_outcome": "Navigation is unlocked."
+              }
+            ],
+            "expected_result": "Account is successfully initialized with $100,000.00, the setup UI hides, the dashboard appears, and key metrics are displayed correctly.",
+            "user_story_detail": "As a Trader, I want to set an initial account balance and view a dashboard of my key portfolio metrics, so that I have a starting point for my simulation and can track my performance at a glance."
+          }
+      ```
+
+      Following file is generated:
+
+      ```ts file=/e2e/TS-1.1_US-001_SuccessfulAccountInitializationandDashboardDisplay.spec.ts
+      // seed: /e2e/seed.spec.ts
+      import { test, expect } from '@playwright/test';
+
+      test.describe('TS-1.1_US-001_SuccessfulAccountInitializationandDashboardDisplay', () => {
+        test('Successful Account Initialization and Dashboard Display', async ({ page }) => {
+          // Navigate to the application URL (handled by seed file setup)
+          await page.goto('http://127.0.0.1:7860/');
+          
+          // Wait for the application UI to load completely.
+          await new Promise(f => setTimeout(f, 5 * 1000));
+
+          // Step 1: Enter '100000.00' into the 'Initial Deposit' input field (ref: e56).
+          await page.getByRole('spinbutton', { name: 'Initial Deposit' }).fill('100000.00');
+
+          // Step 2: Click the 'Start Simulation' button (ref: e57).
+          await page.getByRole('button', { name: 'Start Simulation' }).click();
+
+          // Step 3: Verify the 'Cash Balance' metric (ref: e91).
+          // Expected: The metric displays '$100,000.00' with correct currency formatting.
+          await expect(page.getByRole('textbox', { name: 'Cash Balance' })).toHaveValue('$100,000.00');
+
+          // Step 4: Verify the 'Total Portfolio Value' metric (ref: e81).
+          // Expected: The metric displays '$100,000.00'.
+          await expect(page.getByRole('textbox', { name: 'Total Portfolio Value' })).toHaveValue('$100,000.00');
+
+          // Step 5: Verify the state of the main navigation tabs.
+          // Expected: All main tabs ('Trade' ref: e36, 'Cash Management' ref: e37, 'Transaction History' ref: e38) are enabled (visible).
+          // 5.1: Verify 'Trade' tab (ref: e36) is enabled.
+          await expect(page.getByRole('tab', { name: 'Trade' })).toBeVisible();
+          
+          // 5.2: Verify 'Cash Management' tab (ref: e37) is enabled.
+          await expect(page.getByRole('tab', { name: 'Cash Management' })).toBeVisible();
+          
+          // 5.3: Verify 'Transaction History' tab (ref: e38) is enabled.
+          await expect(page.getByRole('tab', { name: 'Transaction History' })).toBeVisible();
+
+          // Step 6: Verify the user feedback message.
+          // Expected: An information message 'Account initialized with a balance of $100,000.00.' is displayed.
+          // Note: This is a transient message, asserting visibility immediately after the action is the correct approach.
+          await expect(page.getByText('Account initialized with a balance of $100,000.00.')).toBeVisible();
+        });
+      });
+      ```
+      </example-generation>
+  agent: playwright_test_generator

@@ -7,11 +7,16 @@ from crewai.flow import Flow, listen, start
 import subprocess
 import time
 import requests
+import json
+from typing import List, Optional
 
 from scrum_team.crews.pm_demon_king_crew.pm_demon_king_crew import PmDemonKingCrew
 from scrum_team.crews.tech_lead_devil_crew.tech_lead_devil_crew import TechLeadDevilCrew
 from scrum_team.crews.back_end_hell_flames.back_end_hell_flames import BackEndHellFlames
 from scrum_team.crews.front_end_skull_master.front_end_skull_master import FrontEndSkullMaster
+from scrum_team.crews.qa_lead_evil.qa_lead_evil import QaLeadEvil
+from scrum_team.crews.playwright_qa_demon.playwright_qa_demon import PlaywrightQaDemon
+from scrum_team.crews.qa_lead_evil.models import TestPlanStructured, TestScenario, TestStep
 
 class ScrumState(BaseModel):
     module_name: str = "trading_simulation"
@@ -21,6 +26,10 @@ class ScrumState(BaseModel):
     technical_design_created: str = ""
     backend_module_implemented: str = ""
     frontend_module_implemented: str = ""
+    test_plan_created: str = ""
+    test_plan_structured: Optional[TestPlanStructured] = None
+    playwright_tests_generated: List[str] = []
+    application_url: str = "http://127.0.0.1:7860/"
 
 class ScrumFlow(Flow[ScrumState]):
     # @start()
@@ -118,54 +127,123 @@ class ScrumFlow(Flow[ScrumState]):
     #     )
 
     # @listen(save_frontend_module)
+    # def start_gradio_app(self):
+    #     app_icon = "🚀🚀🚀🚀🚀🚀🚀🚀"
+    #     print(f"{app_icon} Starting Gradio app server {app_icon}")
+        
+    #     app_path = "src/crew_generated/engineering/app.py"
+    #     url = self.state.application_url
+    #     timeout = 15  # 15 seconds
+        
+    #     # Start the app in background
+    #     process = subprocess.Popen(
+    #         ["uv", "run", app_path],
+    #         stdout=subprocess.PIPE,
+    #         stderr=subprocess.PIPE,
+    #         text=True
+    #     )
+        
+    #     print(f"  - Process started with PID: {process.pid}")
+    #     print(f"  - Waiting for server to be ready at {url}...")
+    #     # Wait for server to be ready
+    #     start_time = time.time()
+    #     while time.time() - start_time < timeout:
+    #         try:
+    #             response = requests.get(url, timeout=1)
+    #             if response.status_code == 200:
+    #                 print(f"✅ Gradio app is running at {url}")
+    #                 print(f"  - Server ready in {time.time() - start_time:.2f} seconds")
+    #                 print(f"  - Server will continue running in background")
+    #                 print(f"  - Proceeding to next step...")
+    #                 # Server is ready, proceed to next step without blocking
+    #                 return
+    #         except (requests.RequestException, Exception):
+    #             time.sleep(1)
+        
+    #     # Timeout reached
+    #     print(f"❌ Server did not start within {timeout} seconds")
+    #     process.terminate()
+    #     stderr = process.stderr.read() if process.stderr else ""
+    #     if stderr:
+    #         print(f"Error output:\n{stderr}")
+    #     raise Exception(f"Failed to start Gradio server within {timeout} seconds")
+    
+    # @listen(start_gradio_app)
+    # @start()
+    # def run_qa_testing(self):
+    #     self._load_context()
+    #     qa_icon = "👺👺👺👺👺👺👺👺"
+    #     qa_agent_name = "QA Lead - Evil Tester"
+    #     print(f"{qa_icon} {qa_agent_name} Creating comprehensive test plan {qa_icon}")
+        
+    #     # Use relative path to seed file
+    #     seed_file_path = "e2e/seed.spec.ts"
+    #     print(f"  - Seed file path: {seed_file_path}")
+        
+    #     result = (
+    #         QaLeadEvil()
+    #         .crew()
+    #         .kickoff(inputs={
+    #             "application_url": self.state.application_url,
+    #             "user_stories": self.state.user_stories_created,
+    #             "seed_file_path": seed_file_path,
+    #             "module_name": self.state.module_name,
+    #             })
+    #     )        
+        
+    #     # Store both structured and raw outputs
+    #     self.state.test_plan_structured = result.pydantic
+    #     self.state.test_plan_created = result.raw
+        
+    #     num_scenarios = len(self.state.test_plan_structured.scenarios) if self.state.test_plan_structured else 0
+    #     print(f"{qa_icon} {qa_agent_name} Test plan created with {num_scenarios} scenarios {qa_icon}")
+
+    # @listen(run_qa_testing)
     @start()
-    def start_gradio_app(self):
-        app_icon = "🚀🚀🚀🚀🚀🚀🚀🚀"
-        print(f"{app_icon} Starting Gradio app server {app_icon}")
+    def generate_playwright_tests(self):
+        self._load_context()
+        pw_icon = "🎃🎃🎃🎃🎃🎃🎃🎃"
+        pw_agent_name = "Playwright QA Demon"
+        print(f"\n{pw_icon} {pw_agent_name} Generating Playwright test scripts {pw_icon}")
         
-        app_path = "src/crew_generated/engineering/app.py"
-        url = "http://127.0.0.1:7860"
-        timeout = 120  # 2 minutes
+        if not self.state.test_plan_structured or not self.state.test_plan_structured.scenarios:
+            print("⚠️  No test scenarios found in structured test plan. Skipping test generation.")
+            return
         
-        # Start the app in background
-        process = subprocess.Popen(
-            ["uv", "run", app_path],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        )
+        seed_file_path = "e2e/seed.spec.ts"
+        total_scenarios = len(self.state.test_plan_structured.scenarios)
+        max_scenarios = min(2, total_scenarios)  # Limit to first 2 scenarios
         
-        print(f"  - Process started with PID: {process.pid}")
-        print(f"  - Waiting for server to be ready at {url}...")
+        print(f"  - Application URL: {self.state.application_url}")
+        print(f"  - Seed File: {seed_file_path}")
+        print(f"  - Total Scenarios: {total_scenarios} (generating first {max_scenarios})\n")
         
-        # Wait for server to be ready
-        start_time = time.time()
-        while time.time() - start_time < timeout:
+        # Iterate through first 2 test scenarios only
+        for idx, scenario in enumerate(self.state.test_plan_structured.scenarios[:max_scenarios], 1):
+            print(f"  [{idx}/{total_scenarios}] Generating test for: {scenario.test_id} - {scenario.title}")
+            
+            # Convert scenario to JSON for agent
+            scenario_json = json.dumps(scenario.model_dump(), indent=2)
+            
             try:
-                response = requests.get(url, timeout=1)
-                if response.status_code == 200:
-                    print(f"✅ Gradio app is running at {url}")
-                    print(f"  - Server ready in {time.time() - start_time:.2f} seconds")
-                    print(f"  - Press Ctrl+C to stop the server")
-                    
-                    # Keep the process running and stream output
-                    try:
-                        for line in process.stdout:
-                            print(line, end='')
-                    except KeyboardInterrupt:
-                        print(f"\n{app_icon} Stopping Gradio app {app_icon}")
-                        process.terminate()
-                        process.wait(timeout=5)
-                    return
-            except (requests.RequestException, Exception):
-                time.sleep(1)
+                result = (
+                    PlaywrightQaDemon()
+                    .crew()
+                    .kickoff(inputs={
+                        "application_url": self.state.application_url,
+                        "seed_file": seed_file_path,
+                        "test_scenario": scenario_json,
+                    })
+                )
+                
+                self.state.playwright_tests_generated.append(scenario.test_id)
+                print(f"      ✅ Generated: {scenario.test_id}\n")
+                
+            except Exception as e:
+                print(f"      ❌ Failed to generate {scenario.test_id}: {str(e)}\n")
+                continue
         
-        # Timeout reached
-        print(f"❌ Server did not start within {timeout} seconds")
-        process.terminate()
-        stderr = process.stderr.read() if process.stderr else ""
-        if stderr:
-            print(f"Error output:\n{stderr}")
+        print(f"\n{pw_icon} Completed: {len(self.state.playwright_tests_generated)}/{max_scenarios} tests generated (limited to first 2 scenarios) {pw_icon}")
     
     def _save_code_to_file(self, content, filename, log_description):
         print(f"💾 Saving {log_description} to file...")
@@ -250,23 +328,31 @@ class ScrumFlow(Flow[ScrumState]):
         else:
             print(f"File not found: {technical_design_path}")
 
-        # backend_module_path = "src/crew_generated/engineering/trading_simulation_backend.py"
-        # if os.path.exists(backend_module_path):
-        #     print(f"Loading backend module implementation from {backend_module_path}")
-        #     with open(backend_module_path, "r", encoding="utf-8") as f:
-        #         self.state.backend_module_implemented = f.read()
-        # else:
-        #     print(f"File not found: {backend_module_path}")
+        test_plan_path = "docs/crew/trading_simulation_test_plan.json"
+        if os.path.exists(test_plan_path):
+            print(f"Loading test plan from {test_plan_path}")
+            with open(test_plan_path, "r", encoding="utf-8") as f:
+                test_plan_data = json.load(f)
+                self.state.test_plan_created = json.dumps(test_plan_data, indent=2)
+                self.state.test_plan_structured = TestPlanStructured(**test_plan_data)
+            print(f"  - Loaded {len(self.state.test_plan_structured.scenarios)} test scenarios")
+        else:
+            print(f"File not found: {test_plan_path}")
+
 
 def kickoff():
+    """Run the full development workflow"""
     scrum_flow = ScrumFlow()
     scrum_flow.kickoff()
 
+def kickoff_qa():
+    """Run only QA testing workflow"""
+    scrum_flow = ScrumFlow()
+    scrum_flow.run_qa_testing()
 
 def plot():
     scrum_flow = ScrumFlow()
     scrum_flow.plot("scrum_flow.html")
-
 
 def run_with_trigger():
     """
@@ -293,7 +379,6 @@ def run_with_trigger():
         return result
     except Exception as e:
         raise Exception(f"An error occurred while running the flow with trigger: {e}")
-
 
 if __name__ == "__main__":
     kickoff()
