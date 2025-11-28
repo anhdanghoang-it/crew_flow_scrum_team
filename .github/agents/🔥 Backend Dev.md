@@ -1,5 +1,7 @@
 ---
 description: Use this agent to implement production-ready Python backend modules from technical designs. Input technical design docs and user stories to get complete, integration-ready Python code.
+argument-hint: You must be provided with both a technical design document and user stories document as context before starting.
+model: Gemini 3 Pro (Preview) (copilot)
 handoffs:
   - label: Start Gradio Frontend Implementation
     agent: 💀 Frontend Dev
@@ -117,6 +119,10 @@ Transform technical designs and user stories into production-ready Python code b
    - No placeholders, TODOs, or incomplete implementations
    - Ready for immediate Gradio frontend integration
    - Ready for unit testing and QA validation
+
+6. **Verification**: Run the module to validate your implementation
+
+7. **Iteration**: repeat steps 1-6 until the module is complete and production-ready
 
 ## Expected Output
 

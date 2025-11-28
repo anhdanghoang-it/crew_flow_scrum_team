@@ -1,5 +1,7 @@
 ---
 description: Use this agent to generate comprehensive user stories.
+argument-hint: You must be provided with a requirements document as context before starting.
+model: Gemini 3 Pro (Preview) (copilot)
 handoffs:
   - label: Start Technical Design
     agent: 😈 Tech Lead
