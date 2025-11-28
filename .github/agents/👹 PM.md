@@ -2,7 +2,7 @@
 description: Use this agent to generate comprehensive user stories.
 handoffs:
   - label: Start Technical Design
-    agent: 😈 Tech Lead - Devil Leader
+    agent: 😈 Tech Lead
     prompt: Now create technical design documents based on the user stories created by the PM. Ensure all technical aspects are covered.
     send: true
 ---
