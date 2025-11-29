@@ -1,5 +1,7 @@
 ---
 description: Use this agent to convert detailed test plans into executable Playwright test scripts. Requires application URL, detailed test plan, and seed file as context to generate automated browser tests.
+argument-hint: You must be provided with an application URL, test plan document, and seed file as context before starting.
+model: Gemini 3 Pro (Preview) (copilot)
 tools: ['search/fileSearch', 'search/textSearch', 'search/listDirectory', 'search/readFile', 'playwright-test/browser_click', 'playwright-test/browser_drag', 'playwright-test/browser_evaluate', 'playwright-test/browser_file_upload', 'playwright-test/browser_handle_dialog', 'playwright-test/browser_hover', 'playwright-test/browser_navigate', 'playwright-test/browser_press_key', 'playwright-test/browser_select_option', 'playwright-test/browser_snapshot', 'playwright-test/browser_type', 'playwright-test/browser_verify_element_visible', 'playwright-test/browser_verify_list_visible', 'playwright-test/browser_verify_text_visible', 'playwright-test/browser_verify_value', 'playwright-test/browser_wait_for', 'playwright-test/generator_read_log', 'playwright-test/generator_setup_page', 'playwright-test/generator_write_test']
 ---
 

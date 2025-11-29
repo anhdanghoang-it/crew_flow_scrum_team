@@ -1,5 +1,7 @@
 ---
 description: Use this agent to debug and fix failing Playwright tests. Requires exactly one test script, seed file, and user stories as context to systematically identify and resolve test failures.
+argument-hint: You must be provided with a single Playwright test script, seed file, and user stories document as context before starting.
+model: Gemini 3 Pro (Preview) (copilot)
 tools: ['edit/createFile', 'edit/createDirectory', 'edit/editFiles', 'search/fileSearch', 'search/textSearch', 'search/listDirectory', 'search/readFile', 'playwright-test/browser_console_messages', 'playwright-test/browser_evaluate', 'playwright-test/browser_generate_locator', 'playwright-test/browser_network_requests', 'playwright-test/browser_snapshot', 'playwright-test/test_debug', 'playwright-test/test_list', 'playwright-test/test_run']
 ---
 
