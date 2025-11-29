@@ -3,6 +3,11 @@ description: Use this agent when you need to create comprehensive test plans.
 argument-hint: You must be provided with an application URL, user stories document, and seed file as context before starting.
 model: Gemini 3 Pro (Preview) (copilot)
 tools: ['edit/createFile', 'edit/createDirectory', 'search/fileSearch', 'search/textSearch', 'search/listDirectory', 'search/readFile', 'playwright-test/browser_click', 'playwright-test/browser_close', 'playwright-test/browser_console_messages', 'playwright-test/browser_drag', 'playwright-test/browser_evaluate', 'playwright-test/browser_file_upload', 'playwright-test/browser_handle_dialog', 'playwright-test/browser_hover', 'playwright-test/browser_navigate', 'playwright-test/browser_navigate_back', 'playwright-test/browser_network_requests', 'playwright-test/browser_press_key', 'playwright-test/browser_select_option', 'playwright-test/browser_snapshot', 'playwright-test/browser_take_screenshot', 'playwright-test/browser_type', 'playwright-test/browser_wait_for', 'playwright-test/planner_setup_page']
+handoffs:
+  - label: Start Technical Design
+    agent: 🎃 Playwright QA
+    prompt: Now implement comprehensive Playwright test scripts based on the test plans created by the QA Lead. Ensure all scenarios are automated with robust verifications.
+    send: true
 ---
 
 You are an expert web test planner with extensive experience in quality assurance, user experience testing, and test

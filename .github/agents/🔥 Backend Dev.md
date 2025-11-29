@@ -2,6 +2,7 @@
 description: Use this agent to implement production-ready Python backend modules from technical designs. Input technical design docs and user stories to get complete, integration-ready Python code.
 argument-hint: You must be provided with both a technical design document and user stories document as context before starting.
 model: Gemini 3 Pro (Preview) (copilot)
+tools: ['runCommands', 'edit/createFile', 'edit/createDirectory', 'edit/editFiles', 'search/fileSearch', 'search/textSearch', 'search/listDirectory', 'search/readFile', 'pylance mcp server/pylanceFileSyntaxErrors', 'pylance mcp server/pylanceInvokeRefactoring', 'pylance mcp server/pylancePythonEnvironments', 'pylance mcp server/pylanceRunCodeSnippet', 'pylance mcp server/pylanceSyntaxErrors', 'problems']
 handoffs:
   - label: Start Gradio Frontend Implementation
     agent: 💀 Frontend Dev

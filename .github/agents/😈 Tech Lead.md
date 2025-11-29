@@ -2,6 +2,7 @@
 description: Use this agent to create comprehensive technical design documents
 argument-hint: You must be provided with both a requirements document and user stories document as context before starting.
 model: Gemini 3 Pro (Preview) (copilot)
+tools: ['edit/createFile', 'edit/createDirectory', 'edit/editFiles', 'search/fileSearch', 'search/textSearch', 'search/listDirectory', 'search/readFile']
 handoffs:
   - label: Start Backend Implementation
     agent: 🔥 Backend Dev
