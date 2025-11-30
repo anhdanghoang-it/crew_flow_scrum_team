@@ -67,7 +67,7 @@ crewai install
 
 ### Customizing
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+**Add your `OPENAI_API_KEY` and `GOOGLE_API_KEY` into the `.env` file**
 
 - Modify `src/scrum_team/config/agents.yaml` to define your agents
 - Modify `src/scrum_team/config/tasks.yaml` to define your tasks
@@ -92,10 +92,13 @@ While CrewAI handles orchestrated flows, Copilot custom agents (in `.github/agen
 
 ```
 .github/agents/
-	pm_user_stories.md
-	tech_design.md
-	backend_generation.md
-	frontend_ui_scaffold.md
+	👹 PM.md
+	😈 Tech Lead.md
+	🔥 Backend Dev.md
+	💀 Frontend Dev.md
+	👺 QA Lead.md
+	🎃 Playwright QA.md
+	🩸 Healer QA.md
 ```
 
 Each file should describe:
