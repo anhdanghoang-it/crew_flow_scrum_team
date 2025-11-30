@@ -23,6 +23,9 @@ Both agent sets target the same collaborative lifecycle, with each role speciali
 - **Technical Lead Agent**: Produces architectural & technical design documentation.
 - **Backend Developer Agent**: Implements Python backend models & service logic.
 - **Frontend (Gradio) Developer Agent**: Builds the interactive UI (`app.py`) for account management & trading.
+- **QA Lead Agent**: Creates comprehensive test plans based on user stories.
+- **Playwright QA Agent**: Generates automated Playwright test scripts from the test plan.
+- **Healer Agent**: Fixes failing tests or marks them as "FIX ME" if the application behavior is incorrect.
 
 ### When to Use Which
 | Scenario | Choose Copilot Custom Agents | Choose CrewAI Flow |
@@ -81,7 +84,7 @@ crewai run
 
 This command initializes the scrum_team Flow as defined in your configuration.
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+This flow executes the full software development lifecycle: generating user stories, creating technical designs, implementing backend and frontend code, and running QA tests.
 
 ## Running Copilot Custom Agents
 
@@ -105,11 +108,10 @@ You can then reference these artifacts when prompting Copilot Chat or embedding 
 
 ## Trading Simulation UI
 
-The `src/scrum_team/engineering/app.py` file exposes a Gradio interface that covers all account-management user stories (account creation, deposits, withdrawals, trading, portfolio analytics, snapshots, and transaction history). Launch it after installing the project dependencies:
+The `src/crew_generated/engineering/app.py` file exposes a Gradio interface that covers all account-management user stories (account creation, deposits, withdrawals, trading, portfolio analytics, snapshots, and transaction history). Launch it after installing the project dependencies:
 
 ```bash
-pip install -e .
-python src/scrum_team/engineering/app.py
+uv run src/crew_generated/engineering/app.py
 ```
 
 Once running, open the provided local URL to create an account, manage funds, place trades, and inspect historical activity from the dedicated tabs.
