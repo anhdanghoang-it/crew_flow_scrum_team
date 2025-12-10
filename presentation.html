@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>😈 Demon Team - AI-Powered Scrum Flow</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            text-align: center;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+        }
+
+        p, li {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+        }
+
+        .demon-team {
+            font-size: 5rem;
+            margin: 2rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .agent-list {
+            max-width: 900px;
+            margin: 2rem auto;
+            text-align: left;
+        }
+
+        .agent-item {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 5px solid #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .agent-icon {
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+
+        .agent-info {
+            flex: 1;
+        }
+
+        .agent-name {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-description {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .workflow-step {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            max-width: 800px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #ffd700;
+            color: #667eea;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            line-height: 40px;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        .code-box {
+            background: rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+            max-width: 800px;
+            margin: 1rem auto;
+            font-size: 1.2rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .tech-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.3rem;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        li::before {
+            content: "🔥 ";
+            margin-right: 0.5rem;
+        }
+
+        .comparison-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 2rem auto;
+        }
+
+        .comparison-col {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .col-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">10</span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="demon-team" style="animation: pulse 2s infinite;">😈 👹 🔥 💀 👺 🎃 🩸</div>
+            <h1 style="font-size: 5rem;">THE DEMON TEAM</h1>
+            <p class="subtitle" style="font-size: 2.2rem; color: #ffd700;">GitHub Copilot Custom Agents</p>
+            <p class="subtitle" style="font-size: 1.6rem; margin-top: 2rem;">
+                🚀 Your entire dev team... <span class="highlight">as AI agents!</span>
+            </p>
+            <p style="font-size: 1.3rem; margin-top: 1.5rem; opacity: 0.9;">
+                (Yes, we automated ourselves. It's meta 🤯)
+            </p>
+        </div>
+
+        <!-- Slide 2: Overview -->
+        <div class="slide">
+            <h2>🎯 Why This Is Actually Cool</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>💬 One Click Away</h3>
+                    <p>Select agent from dropdown → Type request → Get code. Done! ✨</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⚡ Zero Setup</h3>
+                    <p>No configs, no servers, no API keys. Just works. (We promise!)</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎭 7 Specialists</h3>
+                    <p>PM, Tech Lead, Backend, Frontend, QA Lead, Playwright, Healer</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚀 Real Results</h3>
+                    <p>Built entire trading platform with 40+ E2E tests. No cap!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Demon Team Agents -->
+        <div class="slide">
+            <h2>👹 Meet The GitHub Agents</h2>
+            <div class="agent-list">
+                <div class="agent-item">
+                    <div class="agent-icon">👹</div>
+                    <div class="agent-info">
+                        <div class="agent-name">👹 PM - Product Manager</div>
+                        <div class="agent-description">"Create user stories from requirements" → Perfect acceptance criteria</div>
+                    </div>
+                </div>
+                <div class="agent-item">
+                    <div class="agent-icon">😈</div>
+                    <div class="agent-info">
+                        <div class="agent-name">😈 Tech Lead - Architect</div>
+                        <div class="agent-description">"Design the system" → Technical specs & data models</div>
+                    </div>
+                </div>
+                <div class="agent-item">
+                    <div class="agent-icon">🔥</div>
+                    <div class="agent-info">
+                        <div class="agent-name">🔥 Backend Dev</div>
+                        <div class="agent-description">"Implement this class" → Production-ready Python code</div>
+                    </div>
+                </div>
+                <div class="agent-item">
+                    <div class="agent-icon">💀</div>
+                    <div class="agent-info">
+                        <div class="agent-name">💀 Frontend Dev</div>
+                        <div class="agent-description">"Build the UI" → Complete Gradio interface</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: More Agents -->
+        <div class="slide">
+            <h2>🎭 The QA Trinity</h2>
+            <div class="agent-list">
+                <div class="agent-item">
+                    <div class="agent-icon">👺</div>
+                    <div class="agent-info">
+                        <div class="agent-name">👺 QA Lead</div>
+                        <div class="agent-description">"Create test plan" → Comprehensive test scenarios</div>
+                    </div>
+                </div>
+                <div class="agent-item">
+                    <div class="agent-icon">🎃</div>
+                    <div class="agent-info">
+                        <div class="agent-name">🎃 Playwright QA</div>
+                        <div class="agent-description">"Generate E2E tests" → Automated Playwright specs</div>
+                    </div>
+                </div>
+                <div class="agent-item">
+                    <div class="agent-icon">🩸</div>
+                    <div class="agent-info">
+                        <div class="agent-name">🩸 Healer</div>
+                        <div class="agent-description">"Fix failing tests" → Debug & patch automatically</div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 2rem; font-size: 1.3rem;">
+                <p>📁 All agents defined in <span class="highlight">.github/agents/*.md</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 5: How It Works -->
+        <div class="slide">
+            <h2>💡 How Copilot Agents Work</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>1️⃣ Open Chat</h3>
+                    <p>Click Agent dropdown in VS Code</p>
+                </div>
+                <div class="feature-card">
+                    <h3>2️⃣ Select Agent</h3>
+                    <p>Choose from Demon Team</p>
+                </div>
+                <div class="feature-card">
+                    <h3>3️⃣ Ask Question</h3>
+                    <p>Describe what you need</p>
+                </div>
+                <div class="feature-card">
+                    <h3>4️⃣ Get Results</h3>
+                    <p>Instant, role-specific output</p>
+                </div>
+            </div>
+            <div class="tech-stack" style="margin-top: 2rem;">
+                <div class="tech-badge">🎃 Playwright QA</div>
+                <div class="tech-badge">👹 PM</div>
+                <div class="tech-badge">👺 QA Lead</div>
+                <div class="tech-badge">💀 Frontend Dev</div>
+                <div class="tech-badge">🔥 Backend Dev</div>
+                <div class="tech-badge">😈 Tech Lead</div>
+                <div class="tech-badge">🩸 Healer QA</div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Real Workflow -->
+        <div class="slide">
+            <h2>🔄 Real Development Workflow</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>👹 PM</h3>
+                    <p>Requirements → User Stories</p>
+                </div>
+                <div class="feature-card">
+                    <h3>😈 Tech Lead</h3>
+                    <p>Architecture & Design</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔥 Backend Dev</h3>
+                    <p>Python Classes & Logic</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💀 Frontend Dev</h3>
+                    <p>Gradio UI & Forms</p>
+                </div>
+                <div class="feature-card">
+                    <h3>👺 QA Lead</h3>
+                    <p>Test Scenarios & Plans</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎃 Playwright QA</h3>
+                    <p>E2E Test Automation</p>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1.5rem;">
+                <span class="highlight">Complete SDLC</span> in VS Code Chat!
+            </p>
+        </div>
+
+        <!-- Slide 7: Agent Definition Example -->
+        <div class="slide">
+            <h2>📝 Agent Definition Example</h2>
+            <div class="code-box" style="max-width: 1000px; font-size: 1.1rem;">
+                <div style="color: #ffd700;"># .github/agents/👹 PM.md</div>
+                <div style="margin-top: 0.5rem;">---</div>
+                <div>## Objective</div>
+                <div>Transform requirements into detailed user stories</div>
+                <div style="margin-top: 0.5rem;">## Instructions</div>
+                <div>- Extract functional requirements</div>
+                <div>- Write As a [user], I want [goal], So that [benefit]</div>
+                <div>- Include acceptance criteria & test scenarios</div>
+                <div style="margin-top: 0.5rem;">## Output Format</div>
+                <div>Markdown with user story IDs, descriptions, ACs</div>
+                <div style="margin-top: 0.5rem;">---</div>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1.3rem;">
+                That's it! Now <span class="highlight">👹 PM</span> is available in the Agent dropdown
+            </p>
+            <div class="tech-stack" style="margin-top: 2rem;">
+                <div class="tech-badge">✅ No coding required</div>
+                <div class="tech-badge">✅ No API keys needed</div>
+                <div class="tech-badge">✅ Version controlled</div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Generated Application -->
+        <div class="slide">
+            <h2>🎯 Trading Simulation Platform</h2>
+            <h3>Generated Features</h3>
+            <ul>
+                <li>Account creation & management</li>
+                <li>Deposit & withdrawal operations</li>
+                <li>Buy/sell share transactions</li>
+                <li>Portfolio valuation & P&L tracking</li>
+                <li>Holdings & transaction history</li>
+                <li>Real-time share price integration</li>
+                <li>Balance & affordability validation</li>
+            </ul>
+            <div class="code-box" style="margin-top: 2rem;">
+                <div># Generated code location</div>
+                <div>src/crew_generated/engineering/</div>
+                <div>├── trading_simulation.py  # Backend</div>
+                <div>└── app.py                # Gradio UI</div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Testing & Quality -->
+        <div class="slide">
+            <h2>✅ Automated Testing</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📋 Test Planning</h3>
+                    <p>QA Lead generates comprehensive test scenarios with acceptance criteria</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎭 E2E Automation</h3>
+                    <p>Playwright tests auto-generated from test plans</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🩸 Self-Healing</h3>
+                    <p>Healer agent fixes failing tests or marks bugs</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📊 Coverage</h3>
+                    <p>Account, funds, trading, and portfolio scenarios</p>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; font-size: 1.3rem;">
+                <span class="highlight">40+ test scenarios</span> across all user stories
+            </p>
+        </div>
+
+        <!-- Slide 10: Bonus - CrewAI Orchestration -->
+        <div class="slide">
+            <h2>🎁 BONUS: Full Automation Mode</h2>
+            <h3 style="color: #fff; margin-bottom: 2rem;">Want to go hands-free? We got you! 🚀</h3>
+            <div class="comparison-table">
+                <div class="comparison-col">
+                    <div class="col-title">⚡ GitHub Agents (Main Event)</div>
+                    <ul style="text-align: left;">
+                        <li style="margin-bottom: 1rem;">🎮 Interactive & fun</li>
+                        <li style="margin-bottom: 1rem;">✋ You're in control</li>
+                        <li style="margin-bottom: 1rem;">🔄 Perfect for iteration</li>
+                        <li>📍 <span class="highlight">Dropdown → Select → Ask</span></li>
+                    </ul>
+                </div>
+                <div class="comparison-col">
+                    <div class="col-title">🚀 CrewAI Flow (Bonus!)</div>
+                    <ul style="text-align: left;">
+                        <li style="margin-bottom: 1rem;">🤖 Full autopilot mode</li>
+                        <li style="margin-bottom: 1rem;">📦 End-to-end pipeline</li>
+                        <li style="margin-bottom: 1rem;">⚙️ Perfect for CI/CD</li>
+                        <li>💻 <span class="highlight">crewai run</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="workflow-step" style="margin-top: 2rem; font-size: 1.5rem;">
+                💡 <strong>Pro tip:</strong> Start with agents for quick wins, then automate the whole thing!
+            </div>
+        </div>
+
+        <!-- Slide 11: Vote for Us! -->
+        <div class="slide">
+            <div class="demon-team" style="font-size: 8rem; animation: pulse 2s infinite;">
+                🏆 😈 🏆
+            </div>
+            <h1 style="font-size: 5.5rem; margin-bottom: 1rem; color: #ffd700;">VOTE FOR US!</h1>
+            <p class="subtitle" style="font-size: 2rem; margin-bottom: 2rem;">
+                Help the Demon Team win this hackathon! 🔥
+            </p>
+            <div class="features-grid">
+                <div class="feature-card" style="background: rgba(255,215,0,0.2); border: 3px solid #ffd700;">
+                    <h3>🎮 It Actually Works</h3>
+                    <p>7 agents, full SDLC, real code. Try it yourself!</p>
+                </div>
+                <div class="feature-card" style="background: rgba(255,215,0,0.2); border: 3px solid #ffd700;">
+                    <h3>🆓 100% Open Source</h3>
+                    <p>Take it, use it, customize it. It's yours!</p>
+                </div>
+                <div class="feature-card" style="background: rgba(255,215,0,0.2); border: 3px solid #ffd700;">
+                    <h3>🚀 Game Changing</h3>
+                    <p>From idea → tested app in minutes, not days</p>
+                </div>
+                <div class="feature-card" style="background: rgba(255,215,0,0.2); border: 3px solid #ffd700;">
+                    <h3>🎁 BONUS: CrewAI</h3>
+                    <p>Want full automation? We got that too!</p>
+                </div>
+            </div>
+            <div style="margin-top: 3rem; font-size: 3rem; line-height: 1.6;">
+                <p style="color: #ffd700; font-weight: bold; animation: pulse 2s infinite;">
+                    ⭐ VOTE NOW ⭐
+                </p>
+                <p style="font-size: 1.8rem; margin-top: 1rem;">
+                    (We promise it's worth it 😉)
+                </p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn" onclick="previousSlide()">← Previous</button>
+            <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
