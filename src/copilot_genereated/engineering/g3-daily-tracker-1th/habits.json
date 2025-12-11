@@ -1,0 +1,265 @@
+{
+    "Read 30 minutes": {
+        "name": "Read 30 minutes",
+        "daily_target": 3,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "moring jogging": {
+        "name": "moring jogging",
+        "daily_target": 5,
+        "created_at": "2025-12-11",
+        "check_ins": [
+            "2025-12-11"
+        ],
+        "earned_badges": []
+    },
+    "Exercise": {
+        "name": "Exercise",
+        "daily_target": 5,
+        "created_at": "2025-12-11",
+        "check_ins": [
+            "2025-12-11"
+        ],
+        "earned_badges": []
+    },
+    "Drink Water 1765439617811": {
+        "name": "Drink Water 1765439617811",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439617774": {
+        "name": "Drink Water 1765439617774",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439619843": {
+        "name": "Drink Water 1765439619843",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439648243": {
+        "name": "Drink Water 1765439648243",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439648155": {
+        "name": "Drink Water 1765439648155",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439650677": {
+        "name": "Drink Water 1765439650677",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439678308": {
+        "name": "Drink Water 1765439678308",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439678390": {
+        "name": "Drink Water 1765439678390",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439679874": {
+        "name": "Drink Water 1765439679874",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439886756": {
+        "name": "Drink Water 1765439886756",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439886575": {
+        "name": "Drink Water 1765439886575",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439888950": {
+        "name": "Drink Water 1765439888950",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439913539": {
+        "name": "Drink Water 1765439913539",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439913072": {
+        "name": "Drink Water 1765439913072",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439915919": {
+        "name": "Drink Water 1765439915919",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439941198": {
+        "name": "Drink Water 1765439941198",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439941017": {
+        "name": "Drink Water 1765439941017",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439942969": {
+        "name": "Drink Water 1765439942969",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439960479": {
+        "name": "Drink Water 1765439960479",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439960254": {
+        "name": "Drink Water 1765439960254",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765439962161": {
+        "name": "Drink Water 1765439962161",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440558537": {
+        "name": "Drink Water 1765440558537",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440558437": {
+        "name": "Drink Water 1765440558437",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440560191": {
+        "name": "Drink Water 1765440560191",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440596152": {
+        "name": "Drink Water 1765440596152",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440596108": {
+        "name": "Drink Water 1765440596108",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440597883": {
+        "name": "Drink Water 1765440597883",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440625640": {
+        "name": "Drink Water 1765440625640",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440625885": {
+        "name": "Drink Water 1765440625885",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440627222": {
+        "name": "Drink Water 1765440627222",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440646675": {
+        "name": "Drink Water 1765440646675",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440646419": {
+        "name": "Drink Water 1765440646419",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440648683": {
+        "name": "Drink Water 1765440648683",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    },
+    "Drink Water 1765440921822": {
+        "name": "Drink Water 1765440921822",
+        "daily_target": 2,
+        "created_at": "2025-12-11",
+        "check_ins": [],
+        "earned_badges": []
+    }
+}
