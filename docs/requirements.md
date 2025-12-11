@@ -1,10 +1,33 @@
-A simple account management system for a trading simulation platform.
-The system should allow users to create an account, deposit funds, and withdraw funds.
-The system should allow users to record that they have bought or sold shares, providing a quantity.
-The system should calculate the total value of the user's portfolio, and the profit or loss from the initial deposit.
-The system should be able to report the holdings of the user at any point in time.
-The system should be able to report the profit or loss of the user at any point in time.
-The system should be able to list the transactions that the user has made over time.
-The system should prevent the user from withdrawing funds that would leave them with a negative balance, or
- from buying more shares than they can afford, or selling shares that they don't have.
- The system has access to a function get_share_price(symbol) which returns the current price of a share, and includes a test implementation that returns fixed prices for AAPL, TSLA, GOOGL.
+A simple task management system for organizing daily tasks.
+
+The system should allow users to create tasks with a title and optional description.
+
+Users can add due dates to tasks and the system highlights overdue tasks in red.
+
+Users can mark tasks as complete or incomplete by clicking a checkbox.
+
+Tasks marked as complete show a strikethrough effect.
+
+The system has two main views: "My Tasks" (all tasks) and "Important" (starred tasks only).
+
+Users can star/unstar tasks to mark them as important.
+
+Display a count of active (incomplete) tasks at the top.
+
+Users can delete tasks they no longer need.
+
+Users can edit existing tasks to change the title, description, or due date.
+
+The system sorts tasks automatically: overdue first, then by due date, then tasks without dates.
+
+Users can drag and drop tasks to manually reorder them within the list.
+
+The system prevents creating empty tasks (title is required).
+
+Show completed and active tasks separately, with completed tasks at the bottom.
+
+Include a toggle to show/hide completed tasks.
+
+The interface should be clean and simple with smooth animations when checking off tasks.
+
+All data persists in the browser so users don't lose their tasks on refresh.
