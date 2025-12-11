@@ -2,7 +2,7 @@
 description: Use this agent to generate comprehensive user stories.
 argument-hint: You must be provided with a requirements document as context before starting.
 model: Gemini 3 Pro (Preview) (copilot)
-tools: ['edit/createFile', 'edit/createDirectory', 'edit/editFiles', 'search/fileSearch', 'search/textSearch', 'search/listDirectory', 'search/readFile']
+tools: ['read/readFile', 'edit/createDirectory', 'edit/createFile', 'edit/editFiles', 'search/fileSearch', 'search/listDirectory', 'search/textSearch']
 handoffs:
   - label: Start Technical Design
     agent: 😈 Tech Lead
